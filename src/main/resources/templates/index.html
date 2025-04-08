@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http - FORBIDDEN - www.thymeleaf.org">
+<head>
+    <title>Resumes List</title>
+    <link rel="stylesheet" href="\css\main.css" type="text/css"/>
+</head>
+<body>
+<h1>Resumes List</h1>
+<div  class="create-button">
+    <a th:href="@{/resumes/create}"> <span class = "action" >Create</span></a>
+</div>
+<ul>
+    <ul>
+        <li th:each="employee : ${employees}">
+            <div class="iteam">
+                <div class = "name">
+                    <a th:href="@{/resumes/{id}(id=${employee.id})}"> <span th:text="${employee.name}"/> </a>
+                </div>
+                <div class = "button-class">
+                    <a th:href="@{/resumes/edit/{id}(id=${employee.id})}"> <span class = "action">Update</span></a>
+                    <a th:href="@{/resumes/delete/{id}(id=${employee.id})}"> <span class = "action" >Delete</span></a>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+</ul>
+
+</body>
+</html>

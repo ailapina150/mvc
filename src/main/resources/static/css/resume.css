@@ -1,0 +1,117 @@
+@media(max-width: 600px){
+    .text{
+        flex-size:14px;
+    }
+}
+*{
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    list-style: none;
+    text-decoration: none;
+    line-height: 1.5;
+    outline: none;
+    border: none;
+    text-decoration-color: black;
+}
+:root{
+    --color-hover: blue;
+    --font_h: clamp(1rem, 2vw , 2rem);
+    --font: clamp(1.2rem, 2.5vw , 2.5rem);
+}
+body{
+    background: url(../images/fon.png) no-repeat center/cover;
+    border: black solid 0.3rem;
+}
+/* HEADER--------------------------------------------------------------------*/
+header{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size:var(--font_h);
+    padding: 1rem;
+    border: black solid 0.15rem;
+}
+nav {
+    margin: 1rem;
+    color: saddlebrown;
+}
+
+nav a{
+    margin: 1rem;
+    background-color: cornsilk;
+    padding: 0.4rem;
+    border-radius: 1rem;
+    border: 0.2rem saddlebrown solid;
+}
+nav a:hover{
+    color: var(--color-hover);
+    background-color: aliceblue;
+    border: 0.2rem darkblue solid;
+}
+/* MAIN--------------------------------------------------------------------*/
+main{
+    font-size:var(--font);
+    border: black solid 0.15rem;
+}
+.summary{
+    padding: 1rem;
+    text-align: justify;
+    border-bottom: black solid 0.3rem;
+}
+.summary img{
+    width: clamp(10rem,40vw,30rem);
+    height: auto;
+    border: black 0.2rem solid;
+    border-radius: 2rem;
+    display: flex;
+    float: left;
+}
+.summary div{
+    display: flex;
+    padding: 1rem;
+
+}
+.summary div div{
+    padding: 1rem 2rem;
+    align-items: center;
+    justify-content: center;
+}
+.summary div div ul li{
+ margin-bottom: 2rem;
+}
+.summary div span{
+    color:darkblue;
+}
+.experience{
+    padding: 1rem;
+    border-bottom: black solid 0.3rem;
+}
+.experience h3{
+    padding-top:  2rem ;
+}
+
+.tasks-list {
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+    list-style-position: inside;
+    list-style-type:square;
+}
+.skills {
+    padding: 1rem;
+    border-bottom: black solid 0.3rem;
+}
+
+.education{
+    padding: 1rem;
+}
+
+/* FOOTER--------------------------------------------------------------------*/
+footer{
+    background: antiquewhite;
+    font-size:var(--font);
+    border: black solid 0.15rem;
+    padding: 1rem;
+}

@@ -1,0 +1,91 @@
+@media(max-width: 600px){
+    .text{
+        flex-size:14px;
+    }
+}
+*{
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    list-style: none;
+    text-decoration: none;
+    line-height: 1.5;
+    outline: none;
+    border: none;
+    text-decoration-color: black;
+}
+:root{
+    --font-label: clamp(1rem, 2vw , 2rem);
+    --font: clamp(1.2rem, 2.5vw , 2.5rem);
+}
+body{
+    background: url(../images/fon.png) no-repeat center/cover;
+    font-size:var(--font);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: black solid 0.15rem;
+}
+main{
+    font-size:var(--font);
+}
+h2{
+    text-align: center;
+}
+.title, .summary, .skills, .education, .experience{
+    padding: 1rem;
+    text-align: justify;
+    border-bottom: black solid 0.15rem;
+}
+label{
+    display: block;
+    font-size:var(--font);
+}
+input, textarea, select{
+    display: block;
+    font: unset;
+    font-size:var(--font);
+    text-align: center;
+    width: 100%;
+    border-radius: 1rem;
+    border: 0.2rem saddlebrown solid;
+    color: darkblue;
+}
+.photo-class{
+    border-radius: 0rem;
+    border: none;
+}
+.action{
+    font: unset;
+    padding: 0.5rem;
+    margin: 1rem;
+    background: bisque;
+    border: 0.2rem solid saddlebrown;
+    border-radius: 1rem;
+    line-height: clamp(1.2rem, 2vw + 0.7rem , 2.7rem);
+    text-align: center;
+}
+.delete-button{
+    margin: 1rem;
+    padding: 1rem;
+    text-align: right;
+}
+.action:hover{
+    color: var(--color-hover);
+    background-color: aliceblue;
+    border: 0.2rem darkblue solid;
+}
+.education-elem, .project-elem {
+    border: 0.2rem saddlebrown solid;
+    border-radius: 1rem;
+    background-color: cornsilk;
+    padding: 1rem;
+    margin: 1rem;
+}
+/* FOOTER--------------------------------------------------------------------*/
+footer{
+    border-top: black solid 0.15rem;
+    background: antiquewhite;
+    font-size:var(--font);
+    padding: 1rem;
+}

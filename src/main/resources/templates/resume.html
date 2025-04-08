@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http - FORBIDDEN - www.thymeleaf.org">
+<head>
+
+</head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>resume</title>
+    <link rel="stylesheet" href="\css\resume.css" type="text/css"/>
+</head>
+<body>
+<!--    HEADER ----------------------------------------------------------->
+<header id = "home">
+    <h1 th:text="${employee.name}"/>
+    <h2 th:text="${employee.position}"/>
+    <h3 th:text="${employee.format}"/>
+    <nav>
+        <a th:href=@{/resumes}>Home </a>
+        <a href="#summary">Summary </a>
+        <a href="#experience">Experience </a>
+        <a href="#skills">Skills </a>
+        <a href="#education">Education</a>
+    </nav>
+</header>
+
+<main>
+    <!--    Секция SUMMARY -------------------------------------------------->
+    <section class="summary" id="summary">
+        <h2>Summary</h2>
+        <div>
+           <img th:src="${employee.photo}"/>
+            <div>
+                 <ul>
+                     <li>tg: <span th:text ="${employee.tg}"/></li>
+                     <li>phone: + <span th:text ="${employee.phone}"/></li>
+                     <li>mail: <span th:text ="${employee.email}"/></li>
+                 </ul>
+            </div>
+        </div>
+        <p th:text ="${employee.summary}"/>
+    </section>
+    <hr>
+
+    <!--    Секция EXPERIENCE -------------------------------------------------->
+    <section class="experience" id="experience">
+        <h2>Experience</h2>
+        <ul>
+        <li th:each="project : ${employee.projects}">
+            <h3 th:text ="${project.name}"/>
+            <p><b>Description:</b> <span th:text ="${project.description}"/></p>
+            <ul><b>Tasks:</b>
+                <li class="tasks-list" th:each="task : ${project.tasks}">
+                    <span th:text ="${task}"/>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    </section>
+
+    <!--    Секция SKILLS ------------------------------------------------------>
+    <section class="skills" id="skills">
+        <h2>Skills</h2>
+        <span  th:each="skill : ${employee.skills}">
+            <span th:text ="${skill.title}"/>,
+        </span >
+        <span>English </span>
+        <span th:text ="${employee.englishLevel}"/>
+    </section>
+    <hr>
+
+    <!--    Секция EDUCATION -------------------------------------------------->
+    <section class="education" id="education">
+        <h2>Education</h2>
+        <ul >
+            <li class="tasks-list" th:each="education : ${employee.educations}" >
+                <span th:text ="${education.yearStart}"/>
+                -  <span th:text ="${education.yearEnd}"/>
+                <span th:text ="${education.university}"/>
+                Degree: <span th:text ="${education.degree}"/>
+            </li>
+
+        </ul>
+    </section>
+</main>
+<hr>
+<!--    FOOTER ---------------------------------------------------------------->
+<footer>
+    <p>&copy; 2025 resume <span th:text="${employee.name}"/>
+</footer>
+</body>
+</html>
