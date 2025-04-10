@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="\css\update.css" type="text/css"/>
 </head>
 <body>
+<script src="/js/script.js"></script>
 <main>
     <h1> <span th:text ="${title}"/> resume</h1>
 <form th:action="@{/resumes/update}" method="post" th:object="${employee}" enctype="multipart/form-data">
@@ -52,19 +53,21 @@
 
     <section class="experience" id="experience-class">
         <h2>Experience</h2>
-        <div th:each="project, iterStat : *{projects}">
+        <div th:each="projectContainer, iterStat : *{projects}">
             <div th:id="'projectRow_' + ${iterStat.index}" class="project-elem"><!--   th:if="${iterStat.index} == 0">-->
                 <h3>Project <span th:text ="${iterStat.index}+1"/></h3>
+                <input type = "hidden" id = "projectsSize" th:value = "*{educations.size()}" />
+                <input type = "hidden" id = "projectId" name = "projectId" th:field = "*{projects[__${iterStat.index}__].id}" />
                 <label for = "project-name">Name:</label>
                 <input id = "project-name" type="text" th:field="*{projects[__${iterStat.index}__].name}" required>
                 <label for = "description"> Description:</label>
                 <input id  = "description" type="text" th:field="*{projects[__${iterStat.index}__].description}" required>
                 <div th:each="task, iterTaskStat : *{projects[__${iterStat.index}__].tasks}">
                     <div class="task-elem"><!--     th:if="${iterStat.index} == 0">-->
-                        <div class="education-row" th:id="'taskRow_' + ${iterStat.index}">
+                        <div class="task-row" th:id="'taskRow_' + ${iterStat.index} + '_' + ${iterTaskStat.index}">
                             <label for = "task" > Task <span th:text = "${iterTaskStat.index}+1"/>:</label>
                             <textarea id  = "task" type="text" th:field="*{projects[__${iterStat.index}__].tasks[__${iterTaskStat.index}__]}" />
-                            <button type="button" class="action" th:onclick="'delTask(' + ${iterStat.index} + ')'">Delete Task</button>
+                            <button type="button" class="action" th:onclick="'delTask(' + ${iterStat.index} + ' , ' + ${iterTaskStat.index} + ')'">Delete Task</button>
                         </div>
                     </div>
                 </div>
@@ -73,7 +76,9 @@
                 </div>
             </div>
         </div>
+        <button type="button" class = "action" onclick="addProject()">Add Project</button>
     </section>
+
     <section class="skills" id="skills-class">
         <h2>Skills</h2>
         <label for="skills">Skills:</label>
@@ -88,9 +93,11 @@
 
     <section class="education" id="education-class">
         <h2>Education</h2>
-        <div id = "educationContainer" th:each="education, iterStat : *{educations}">
-            <div th:id="'educationRow_' + ${iterStat.index}"  class="education-elem">
-                <input id ="educationId" name="educationId" type="hidden" th:field="*{educations[__${iterStat.index}__].id}" />
+        <div id = "educationContainer" th:each="education, iterStat : *{educations} ">
+            <div th:id="'educationRow_' + ${iterStat.index}" class="education-elem" th:data-index="${iterStat.index}">
+
+                <input type="hidden" id="educationsSize" th:value="*{educations.size()}" />
+                <input type="hidden" id ="educationId" name="educationId" th:field="*{educations[__${iterStat.index}__].id}" />
                 <label for = "yearStart"> Year Start:</label>
                 <input id = "yearStart" type="number" th:field="*{educations[__${iterStat.index}__].yearStart}" required>
                 <label for = "yearEnd"> Year End:</label>
@@ -103,8 +110,9 @@
                     <button type="button" class="action" th:onclick="'delEducation(' + ${iterStat.index} + ')'">Delete Education</button>
                 </div>
             </div>
+
         </div>
-<!--        <button type="button" class = "action" onclick="addEducation()">Add Education</button>-->
+        <button type="button" class = "action" onclick="addEducation()">Add Education</button>
     </section>
 
     <button type="submit" class = "action"> Submit </button>
@@ -114,36 +122,6 @@
 <footer>
     <p>&copy; 2025 resume <span th:text="${employee.name}"/>
 </footer>
+
 </body>
-<script>
-    // Функция для удаления элемента образования
-    function delEducation(index) {
-        const row = document.getElementById('educationRow_' + index);
-        if (row) {
-            row.remove();
-        } else {
-            console.error('Элемент Education с индексом ${index} не найден.');
-        }
-    }
-    // Функция для удаления элемента проекта
-    function delProject(index) {
-        const row = document.getElementById('projectRow_' + index);
-        if (row) {
-            row.remove();
-        } else {
-            console.error('Элемент с Project индексом ${index} не найден.');
-        }
-    }
-    // Функция для удаления элемента задачи
-    function delTask(index) {
-        const row = document.getElementById('taskRow_' + index);
-        if (row) {
-            row.remove();
-        } else {
-            console.error('Элемент сTask индексом ${index} не найден.');
-        }
-    }
-
-</script>
-
 </html>
