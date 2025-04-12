@@ -115,35 +115,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository<Employee> {
                                         "Determining performance bottlenecks and optimizing SQL queries",
                                         "Working with Stream API and multithreading",
                                         "Working with message brokers (Kafka)",
-                                        "Working with a noSQL database (Redis)",
-                                        "Connecting Swagger for automatic generation of API descriptions",
-                                        "Code review and code refactoring",
-                                        "Creating algorithms for statistical and probabilistic calculations",
-                                        "Assistance to analysts in creating technical specifications"
-                                ))
-                                .build(),
-                        Project.builder()
-                                .name("Project for the Ministry of Transport of the Republic of Belarus")
-                                .description("Monolithic RestFul web application")
-                                .tasks(List.of(
-                                        "Creating a demo application from scratch",
-                                        "Development of calculation algorithms",
-                                        "Development of an architectural solution using the MVC pattern",
-                                        "Development of a REST API",
-                                        "Database design",
-                                        "Deployment of the database in Docker",
-                                        "Implementation of all application logic",
-                                        "Writing build scripts on maven"
-                                ))
-                                .build(),
-                        Project.builder()
-                                .name("Car leasing project")
-                                .description("Microservice desktop application")
-                                .tasks(List.of(
-                                        "Working with multithreading",
-                                        "Working with message brokers (RabbitMQ)",
-                                        "Writing JUnit and integration tests (parameterized tests, Mockito, TestContainers)",
-                                        "Working on SCRUM methodology in a team of 6 people"
+                                        "Working with a noSQL database (Redis)"
                                 ))
                                 .build()
                 ))

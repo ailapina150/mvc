@@ -52,25 +52,24 @@
 
     <section class="experience" id="experience-class">
         <h2>Experience</h2>
-        <div th:each="projectContainer, iterStat : *{projects}">
-            <div th:id="'projectRow_' + ${iterStat.index}" class="project-elem"><!--   th:if="${iterStat.index} == 0">-->
-                <h3>Project <span th:text ="${iterStat.index} + 1"/></h3>
-                <input type = "hidden" id = "projectsSize" th:value = "*{educations.size()}" />
+        <div  id = "projectContainer" th:each="projectContainer, iterStat : *{projects}">
+            <div th:id="'projectRow_' + ${iterStat.index}" class="project-elem">
+                <input type = "hidden" id = "projectsSize" th:value = "*{projects.size()}" />
                 <input type = "hidden" id = "projectId" name = "projectId" th:field = "*{projects[__${iterStat.index}__].id}" />
                 <label for = "project-name">Name:</label>
                 <input id = "project-name" type="text" th:field="*{projects[__${iterStat.index}__].name}" required>
                 <label for = "description"> Description:</label>
                 <input id  = "description" type="text" th:field="*{projects[__${iterStat.index}__].description}" required>
-                <div th:each="task, iterTaskStat : *{projects[__${iterStat.index}__].tasks}">
-                    <div class="task-elem"><!--     th:if="${iterStat.index} == 0">-->
-                        <div class="task-row" th:id="'taskRow_' + ${iterStat.index} + '_' + ${iterTaskStat.index}">
-                            <label for = "task" > Task <span th:text = "${iterTaskStat.index}+1"/>:</label>
-                            <textarea id  = "task" type="text" th:field="*{projects[__${iterStat.index}__].tasks[__${iterTaskStat.index}__]}" />
-                            <button type="button" class="action" th:onclick="'delTask(' + ${iterStat.index} + ' , ' + ${iterTaskStat.index} + ')'">Delete Task</button>
-                        </div>
+                <label> Tasks:</label>
+                <div th:id="'tasks_' + ${iterStat.index}" th:each="task, iterTaskStat : *{projects[__${iterStat.index}__].tasks}">
+                    <input type = "hidden" th:id = "'tasksSize_' + ${iterStat.index}" th:value = "*{projects[__${iterStat.index}__].tasks.size()}"/>
+                    <div class="task-row" th:id="'taskRow_' + ${iterStat.index} + '_' + ${iterTaskStat.index}">
+                        <textarea id  = "task" type="text" th:field="*{projects[__${iterStat.index}__].tasks[__${iterTaskStat.index}__]}"></textarea>
+                        <button type="button" class="action" th:onclick="'delTask(' + ${iterStat.index} + ' , ' + ${iterTaskStat.index} + ')'">Delete Task</button>
                     </div>
                 </div>
                 <div class="delete-button">
+                    <button type="button" class="action" th:onclick="'addTask(' + ${iterStat.index} + ')'">Add Task</button>
                     <button type="button" class="action" th:onclick="'delProject(' + ${iterStat.index} + ')'">Delete Project</button>
                 </div>
             </div>
@@ -109,7 +108,6 @@
                     <button type="button" class="action" th:onclick="'delEducation(' + ${iterStat.index} + ')'">Delete Education</button>
                 </div>
             </div>
-
         </div>
         <button type="button" class = "action" onclick="addEducation()">Add Education</button>
     </section>
