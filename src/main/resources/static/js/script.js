@@ -90,3 +90,4 @@
         `;
         projectContainer.appendChild(newProject);
     }
+
