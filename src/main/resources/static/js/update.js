@@ -55,7 +55,7 @@
         newTask.setAttribute('id', 'taskRow_' + index + '_'+ nextIndex);
         newTask.innerHTML = `
         <div id="taskRow_${index}_${nextIndex}" class="task-row" >
-            <textarea id = "task_${index}_${nextIndex}" type="text"> </textarea>
+            <textarea id = "task_${index}_${nextIndex}"> </textarea>
             <button type="button" class="action" onclick="delTask( ${index} , ${nextIndex})">Delete Task</button>
         </div>
         `;
@@ -81,7 +81,7 @@
             <label> Tasks:</label>
             <div id = "tasks_${nextIndex}">
                 <div id="taskRow_${nextIndex}_0" class="task-row" >
-                    <textarea id = "task_${nextIndex}_0" type="text"> </textarea>
+                    <textarea id = "task_${nextIndex}_0" "> </textarea>
                     <button type="button" class="action" onclick="delTask( ${nextIndex},0)">Delete Task</button>
                 </div>
             </div>
