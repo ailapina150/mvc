@@ -2,7 +2,8 @@
 <html xmlns:th="http - FORBIDDEN - www.thymeleaf.org">
 <head>
     <title>Resumes List</title>
-    <link rel="stylesheet" href="\css\main.css" type="text/css"/>
+    <link rel="stylesheet" href="\css\index.css" type="text/css"/>
+    <script src="/js/index.js"></script>
 </head>
 <body>
 <h1>Resumes List</h1>
@@ -18,7 +19,7 @@
                 </div>
                 <div class = "button-class">
                     <a th:href="@{/resumes/edit/{id}(id=${employee.id})}"> <span class = "action">Update</span></a>
-                    <a th:href="@{/resumes/delete/{id}(id=${employee.id})}"> <span class = "action" >Delete</span></a>
+                    <a th:href="@{/resumes/delete/{id}(id=${employee.id})}" onclick="return confirmDelete()"><span class = "action" >Delete</span></a>
                 </div>
 
             </div>

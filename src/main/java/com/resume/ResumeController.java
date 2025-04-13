@@ -3,6 +3,8 @@ package com.resume;
 import com.resume.model.*;
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -46,9 +48,11 @@ public class ResumeController {
 
     @GetMapping("/delete/{id}")
     public String deleteResume(@PathVariable Long id){
+        System.out.println("Удаление");
         employeeRepository.deleteById(id);
         return "redirect:/resumes";
     }
+
 
     @GetMapping("/edit/{id}")
     public String editResume(Model model,@PathVariable Long id){
