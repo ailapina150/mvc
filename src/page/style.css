@@ -20,7 +20,7 @@
     --font: clamp(2.4rem, 1vw , 5rem);
 }
 body{
-    background: url(../static/images/fon.png) no-repeat center/cover;
+    background: url(fon.png) no-repeat center/cover;
     border: black solid 0.3rem;
 }
 /* HEADER--------------------------------------------------------------------*/

@@ -77,7 +77,7 @@ public class ResumeController {
 
         Employee employee = Employee.builder()
                 .id(id + 1)
-                .projects(List.of( Project.builder().tasks(List.of("","","")).build()))
+                .projects(List.of( Project.builder().tasks(List.of(Task.builder().build())).build()))
                 .educations(List.of(new Education()))
                 .build();
         if(employee == null){
@@ -96,11 +96,22 @@ public class ResumeController {
         System.out.println("*****"+employee);
         employee.setEducations(employee.getEducations().stream().filter(Objects::nonNull).toList());
         employee.setProjects(employee.getProjects().stream().filter(Objects::nonNull).toList());
+        for(Education education: employee.getEducations()){
+            education.setEmployee(employee);
+        }
         for(Project project: employee.getProjects()){
-            project.setTasks(project.getTasks().stream().filter(e->e!=null && !e.isEmpty()).toList());
+            project.setEmployee(employee);
         }
 
-
+        for(Project project: employee.getProjects()){
+            if(project.getTasks()!=null) {
+                project.setTasks(project.getTasks()
+                        .stream()
+                        .filter(e -> e != null && e.getTask() != null && !e.getTask().isEmpty())
+                        .toList());
+                project.getTasks().forEach(e->e.setProject(project));
+            }
+        }
 
         if(!photoFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(photoFile.getOriginalFilename());

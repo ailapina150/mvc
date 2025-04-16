@@ -50,7 +50,7 @@ public enum Skills {
     private String title;
 
     public static List<String> titles(){
-        return Arrays.stream(values()).map(e->e.getTitle()).toList();
+        return Arrays.stream(values()).map(Skills::getTitle).toList();
     }
 
 }

@@ -1,15 +1,29 @@
 package com.resume.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Setter
+@Getter
 @Builder
+@Entity
+@Table(name = "projects", schema ="public" )
+@NoArgsConstructor
+@AllArgsConstructor
 public class Project {
+    @Id
     private Long id;
+
     private String name;
+
     private String description;
-    private List<String> tasks;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_employee")
+    private Employee employee;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
 }

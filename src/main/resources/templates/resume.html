@@ -51,7 +51,7 @@
             <p><b>Description:</b> <span th:text ="${project.description}"/></p>
             <ul><b>Tasks:</b>
                 <li class="tasks-list" th:each="task : ${project.tasks}">
-                    <span th:text ="${task}"/>
+                    <span th:text ="${task.task}"/>
                 </li>
             </ul>
         </li>
