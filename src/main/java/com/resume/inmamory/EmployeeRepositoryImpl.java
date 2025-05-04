@@ -1,6 +1,6 @@
 package com.resume.inmamory;
 
-import com.resume.EmployeeRepository;
+import com.resume.Port;
 import com.resume.model.*;
 
 import org.springframework.stereotype.Repository;
@@ -12,7 +12,7 @@ import java.util.Optional;
 import static java.util.List.*;
 
 @Repository
-public class EmployeeRepositoryImpl implements EmployeeRepository<Employee> {
+public class EmployeeRepositoryImpl implements Port<Employee> {
     List<Employee> EMPLOYEES = new ArrayList<>();
     {
         Employee employee1 = Employee
@@ -58,42 +58,42 @@ public class EmployeeRepositoryImpl implements EmployeeRepository<Employee> {
                                 .name("Project for the Ministry of Nature of the Republic of Belarus")
                                 .description("Microservice RestFul web application")
                                 .tasks(of(
-                                        Task.builder().task("Developing a microservice responsible for creating reports (using SpringBoot)").build(),
-                                        Task.builder().task("Outputting reports to Excel and Word using the Apache POI library, working with the Jasper Reports application").build(),
-                                        Task.builder().task("Writing complex queries to the database in native SQL (PostgreSQL)").build(),
-                                        Task.builder().task("Mapping entities to Java objects (Hibernate)").build(),
-                                        Task.builder().task("Determining performance bottlenecks and optimizing SQL queries").build(),
-                                        Task.builder().task("Working with Stream API and multithreading").build(),
-                                        Task.builder().task("Working with message brokers (Kafka)").build(),
-                                        Task.builder().task("Working with a noSQL database (Redis)").build(),
-                                        Task.builder().task("Connecting Swagger for automatic generation of API descriptions").build(),
-                                        Task.builder().task("Code review and code refactoring").build(),
-                                        Task.builder().task("Creating algorithms for statistical and probabilistic calculations").build(),
-                                        Task.builder().task("Assistance to analysts in creating technical specifications").build()
+                                        Task.builder().description("Developing a microservice responsible for creating reports (using SpringBoot)").build(),
+                                        Task.builder().description("Outputting reports to Excel and Word using the Apache POI library, working with the Jasper Reports application").build(),
+                                        Task.builder().description("Writing complex queries to the database in native SQL (PostgreSQL)").build(),
+                                        Task.builder().description("Mapping entities to Java objects (Hibernate)").build(),
+                                        Task.builder().description("Determining performance bottlenecks and optimizing SQL queries").build(),
+                                        Task.builder().description("Working with Stream API and multithreading").build(),
+                                        Task.builder().description("Working with message brokers (Kafka)").build(),
+                                        Task.builder().description("Working with a noSQL database (Redis)").build(),
+                                        Task.builder().description("Connecting Swagger for automatic generation of API descriptions").build(),
+                                        Task.builder().description("Code review and code refactoring").build(),
+                                        Task.builder().description("Creating algorithms for statistical and probabilistic calculations").build(),
+                                        Task.builder().description("Assistance to analysts in creating technical specifications").build()
                                 ))
                                 .build(),
                         Project.builder()
                                 .name("Project for the Ministry of Transport of the Republic of Belarus")
                                 .description("Monolithic RestFul web application")
                                 .tasks(of(
-                                        Task.builder().task("Creating a demo application from scratch").build(),
-                                        Task.builder().task("Development of calculation algorithms").build(),
-                                        Task.builder().task("Development of an architectural solution using the MVC pattern").build(),
-                                        Task.builder().task("Development of a REST API").build(),
-                                        Task.builder().task("Database design").build(),
-                                        Task.builder().task("Deployment of the database in Docker").build(),
-                                        Task.builder().task("Implementation of all application logic").build(),
-                                        Task.builder().task("Writing build scripts on maven").build()
+                                        Task.builder().description("Creating a demo application from scratch").build(),
+                                        Task.builder().description("Development of calculation algorithms").build(),
+                                        Task.builder().description("Development of an architectural solution using the MVC pattern").build(),
+                                        Task.builder().description("Development of a REST API").build(),
+                                        Task.builder().description("Database design").build(),
+                                        Task.builder().description("Deployment of the database in Docker").build(),
+                                        Task.builder().description("Implementation of all application logic").build(),
+                                        Task.builder().description("Writing build scripts on maven").build()
                                 ))
                                 .build(),
                         Project.builder()
                                 .name("Car leasing project")
                                 .description("Microservice desktop application")
                                 .tasks(of(
-                                        Task.builder().task("Working with multithreading").build(),
-                                        Task.builder().task("Working with message brokers (RabbitMQ)").build(),
-                                        Task.builder().task("Writing JUnit and integration tests (parameterized tests, Mockito, TestContaners)").build(),
-                                        Task.builder().task("Working on SCRUM methodology in a team of 6 people").build()
+                                        Task.builder().description("Working with multithreading").build(),
+                                        Task.builder().description("Working with message brokers (RabbitMQ)").build(),
+                                        Task.builder().description("Writing JUnit and integration tests (parameterized tests, Mockito, TestContaners)").build(),
+                                        Task.builder().description("Working on SCRUM methodology in a team of 6 people").build()
                                 ))
                                 .build()
                 ))
@@ -141,10 +141,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository<Employee> {
                                 .name("Car leasing project")
                                 .description("Microservice desktop application")
                                 .tasks(of(
-                                        Task.builder().task("Working with multithreading").build(),
-                                        Task.builder().task("Working with message brokers (RabbitMQ)").build(),
-                                        Task.builder().task("Writing JUnit and integration tests (parameterized tests, Mockito, TestContaners)").build(),
-                                        Task.builder().task("Working on SCRUM methodology in a team of 6 people").build()
+                                        Task.builder().description("Working with multithreading").build(),
+                                        Task.builder().description("Working with message brokers (RabbitMQ)").build(),
+                                        Task.builder().description("Writing JUnit and integration tests (parameterized tests, Mockito, TestContaners)").build(),
+                                        Task.builder().description("Working on SCRUM methodology in a team of 6 people").build()
                                 ))
                                 .build()
                 ))

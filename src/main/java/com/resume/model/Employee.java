@@ -1,14 +1,13 @@
 package com.resume.model;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
 import java.io.File;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -16,6 +15,7 @@ import java.util.List;
 @Table(name = "employees", schema ="public" )
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String position;
@@ -35,8 +35,10 @@ public class Employee {
     @Transient
     private List<Skills> skills;
 
+    @Column(name ="english_level")
+    @Enumerated(EnumType.ORDINAL)
     private EnglishLevels englishLevel;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
     private List<Education> educations;
 }

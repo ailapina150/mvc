@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http - FORBIDDEN - www.thymeleaf.org">
+<html xmlns:th="http - FORBIDDEN - www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create/Update</title>
@@ -8,117 +8,137 @@
 </head>
 <body>
 <main>
-    <h1> <span th:text ="${title}"/> resume</h1>
-<form th:action="@{/resumes/update}" method="post" th:object="${employee}" enctype="multipart/form-data">
+    <h1><span th:text="${title}"></span>resume</h1>
+    <form th:action="@{/resumes/update}" method="post" th:object="${employee}" enctype="multipart/form-data">
 
-    <section class="title" id="title_class">
-        <input type="hidden" th:field="*{id}" />
-        <input type="hidden" th:field="*{photo}" />
+        <section class="title" id="title_class">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{photo}"/>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" th:field="*{name}" required/>
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required/>
 
 
-        <label for="position">Position:</label>
-        <input type="text" id="position" th:field="*{position}" required/>
-        <span th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span>
+            <label for="position">Position:</label>
+            <input type="text" id="position" th:field="*{position}" required/>
+            <span th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span>
 
-        <label for="format">Format:</label>
-        <input type="text" id="format" th:field="*{format}" required/>
-        <span th:if="${#fields.hasErrors('format')}" th:errors="*{format}"></span>
-    </section>
+            <label for="format">Format:</label>
+            <input type="text" id="format" th:field="*{format}" required/>
+            <span th:if="${#fields.hasErrors('format')}" th:errors="*{format}"></span>
+        </section>
 
-    <section class="summary" id="summary_class">
-        <h2>Summary</h2>
-        <label for="summary">Summary:</label>
-        <textarea id="summary" th:field="*{summary}"></textarea>
-        <span th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}"></span>
+        <section class="summary" id="summary_class">
+            <h2>Summary</h2>
+            <label for="summary">Summary:</label>
+            <textarea id="summary" th:field="*{summary}"></textarea>
+            <span th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}"></span>
 
-        <label for="tg">Tg:</label>
-        <input type="text" id="tg" th:field="*{tg}" required/>
-        <span th:if="${#fields.hasErrors('tg')}" th:errors="*{tg}"></span>
+            <label for="tg">Tg:</label>
+            <input type="text" id="tg" th:field="*{tg}" required/>
+            <span th:if="${#fields.hasErrors('tg')}" th:errors="*{tg}"></span>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required/>
-        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required/>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" th:field="*{phone}"/>
-        <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" th:field="*{phone}"/>
+            <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
 
-        <label for="photoFileName">Change a profile picture:</label>
-        <input class="photo-class" type="file" id="photoFileName" name="photoFileName" accept="image/*">
-    </section>
+            <label for="photoFileName">Change a profile picture:</label>
+            <input class="photo-class" type="file" id="photoFileName" name="photoFileName" accept="image/*">
+        </section>
 
-    <section class="experience" id="experience-class">
-        <h2>Experience</h2>
-        <div  id = "projectContainer" th:each="projectContainer, iterStat : *{projects}">
-            <div th:id="'projectRow_' + ${iterStat.index}" class="project-elem">
-                <input type = "hidden" id = "projectsSize" th:value = "*{projects.size()}" />
-                <input type = "hidden" id = "projectId" name = "projectId" th:field = "*{projects[__${iterStat.index}__].id}" />
-                <label for = "project-name">Name:</label>
-                <input id = "project-name" type="text" th:field="*{projects[__${iterStat.index}__].name}" required>
-                <label for = "description"> Description:</label>
-                <input id  = "description" type="text" th:field="*{projects[__${iterStat.index}__].description}" required>
-                <label> Tasks:</label>
-                <div th:id="'tasks_' + ${iterStat.index}" th:each="task, iterTaskStat : *{projects[__${iterStat.index}__].tasks}">
-                    <input type = "hidden" th:id = "'tasksSize_' + ${iterStat.index}" th:value = "*{projects[__${iterStat.index}__].tasks.size()}"/>
-                    <div class="task-row" th:id="'taskRow_' + ${iterStat.index} + '_' + ${iterTaskStat.index}">
-                        <input id  = "taskId" type = "hidden" name = "taskId" th:field="*{projects[__${iterStat.index}__].tasks[__${iterTaskStat.index}__].id}">
-                        <textarea id  = "task" type="text" th:field="*{projects[__${iterStat.index}__].tasks[__${iterTaskStat.index}__].task}"></textarea>
-                        <button type="button" class="action" th:onclick="'delTask(' + ${iterStat.index} + ' , ' + ${iterTaskStat.index} + ')'">Delete Task</button>
+        <section class="experience" id="experience-class">
+            <h2>Experience</h2>
+            <div id="projectContainer" th:each="projectContainer, iterStat : *{projects}">
+                <div th:id="'projectRow_' + ${iterStat.index}" class="project-elem">
+                    <input type="hidden" id="projectsSize" th:value="*{projects.size()}"/>
+                    <input type="hidden" id="projectId" name="projectId"
+                           th:field="*{projects[__${iterStat.index}__].id}"/>
+                    <label for="project-name">Name:</label>
+                    <input id="project-name" type="text" th:field="*{projects[__${iterStat.index}__].name}" required>
+                    <label for="description"> Description:</label>
+                    <input id="description" type="text" th:field="*{projects[__${iterStat.index}__].description}"
+                           required>
+                    <label> Tasks:</label>
+                    <div th:id="'tasks_' + ${iterStat.index}"
+                         th:each="task, iterTaskStat : *{projects[__${iterStat.index}__].tasks}">
+                        <input type="hidden" th:id="'tasksSize_' + ${iterStat.index}"
+                               th:value="*{projects[__${iterStat.index}__].tasks.size()}"/>
+                        <div class="task-row" th:id="'taskRow_' + ${iterStat.index} + '_' + ${iterTaskStat.index}">
+                            <input id="taskId" type="hidden" name="taskId"
+                                   th:field="*{projects[__${iterStat.index}__].tasks[__${iterTaskStat.index}__].id}">
+                            <textarea id="task" type="text"
+                                      th:field="*{projects[__${iterStat.index}__].tasks[__${iterTaskStat.index}__].description}"></textarea>
+                            <button type="button" class="action"
+                                    th:onclick="'delTask(' + ${iterStat.index} + ' , ' + ${iterTaskStat.index} + ')'">
+                                Delete Task
+                            </button>
+                        </div>
+                    </div>
+                    <div class="delete-button">
+                        <button type="button" class="action" th:onclick="'addTask(' + ${iterStat.index} + ')'">Add
+                            Task
+                        </button>
+                        <button type="button" class="action" th:onclick="'delProject(' + ${iterStat.index} + ')'">Delete
+                            Project
+                        </button>
                     </div>
                 </div>
-                <div class="delete-button">
-                    <button type="button" class="action" th:onclick="'addTask(' + ${iterStat.index} + ')'">Add Task</button>
-                    <button type="button" class="action" th:onclick="'delProject(' + ${iterStat.index} + ')'">Delete Project</button>
+            </div>
+            <button type="button" class="action" onclick="addProject()">Add Project</button>
+        </section>
+
+        <section class="skills" id="skills-class">
+            <h2>Skills</h2>
+            <label for="skills">Skills:</label>
+            <select id="skills" th:field="*{skills}" multiple="multiple">
+                <option th:each="skill : ${skillsList}" th:value="${skill}" th:text="${skill}"></option>
+            </select>
+            <label for="englishLevel">English level:</label>
+            <select id="englishLevel" th:field="*{englishLevel}">
+                <option th:each="englishLevel : ${englishLevelsList}" th:value="${englishLevel}"
+                        th:text="${englishLevel}"></option>
+            </select>
+        </section>
+
+        <section class="education" id="education-class">
+            <h2>Education</h2>
+            <div id="educationContainer" th:each="education, iterStat : *{educations} ">
+                <div th:id="'educationRow_' + ${iterStat.index}" class="education-elem"
+                     th:data-index="${iterStat.index}">
+
+                    <input type="hidden" id="educationsSize" th:value="*{educations.size()}"/>
+                    <input type="hidden" id="educationId" name="educationId"
+                           th:field="*{educations[__${iterStat.index}__].id}"/>
+                    <label for="yearStart"> Year Start:</label>
+                    <input id="yearStart" type="number" th:field="*{educations[__${iterStat.index}__].yearStart}"
+                           required>
+                    <label for="yearEnd"> Year End:</label>
+                    <input id="yearEnd" type="number" th:field="*{educations[__${iterStat.index}__].yearEnd}" required>
+                    <label for="university"> University:</label>
+                    <input id="university" type="text" th:field="*{educations[__${iterStat.index}__].university}"
+                           required>
+                    <label for="degree"> Degree:</label>
+                    <input id="degree" type="text" th:field="*{educations[__${iterStat.index}__].degree}" required>
+                    <div class="delete-button">
+                        <button type="button" class="action" th:onclick="'delEducation(' + ${iterStat.index} + ')'">
+                            Delete Education
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <button type="button" class = "action" onclick="addProject()">Add Project</button>
-    </section>
+            <button type="button" class="action" onclick="addEducation()">Add Education</button>
+        </section>
 
-    <section class="skills" id="skills-class">
-        <h2>Skills</h2>
-        <label for="skills">Skills:</label>
-        <select id="skills" th:field="*{skills}" multiple="multiple">
-            <option th:each="skill : ${skillsList}" th:value="${skill}" th:text="${skill}"></option>
-        </select>
-        <label for="englishLevel">English level:</label>
-        <select id="englishLevel" th:field="*{englishLevel}" >
-            <option th:each="englishLevel : ${englishLevelsList}" th:value="${englishLevel}" th:text="${englishLevel}"/>
-        </select>
-    </section>
-
-    <section class="education" id="education-class">
-        <h2>Education</h2>
-        <div id = "educationContainer" th:each="education, iterStat : *{educations} ">
-            <div th:id="'educationRow_' + ${iterStat.index}" class="education-elem" th:data-index="${iterStat.index}">
-
-                <input type = "hidden" id="educationsSize" th:value="*{educations.size()}" />
-                <input type = "hidden" id ="educationId" name="educationId" th:field="*{educations[__${iterStat.index}__].id}" />
-                <label for = "yearStart"> Year Start:</label>
-                <input id = "yearStart" type="number" th:field="*{educations[__${iterStat.index}__].yearStart}" required>
-                <label for = "yearEnd"> Year End:</label>
-                <input id = "yearEnd" type="number" th:field="*{educations[__${iterStat.index}__].yearEnd}" required>
-                <label for="university"> University:</label>
-                <input id = "university" type="text" th:field="*{educations[__${iterStat.index}__].university}" required>
-                <label for = "degree"> Degree:</label>
-                <input id  = "degree" type="text" th:field="*{educations[__${iterStat.index}__].degree}" required>
-                <div class="delete-button">
-                    <button type="button" class="action" th:onclick="'delEducation(' + ${iterStat.index} + ')'">Delete Education</button>
-                </div>
-            </div>
-        </div>
-        <button type="button" class = "action" onclick="addEducation()">Add Education</button>
-    </section>
-
-    <button type="submit" class = "action"> Submit </button>
-    <a th:href="@{/resumes}" class = "action"> Cancel </a>
-</form>
+        <button type="submit" class="action"> Submit</button>
+        <a th:href="@{/resumes}" class="action"> Cancel </a>
+    </form>
 </main>
 <footer>
-    <p>&copy; 2025 resume <span th:text="${employee.name}"/>
+    <p>&copy; 2025 resume <span th:text="${employee.name}"></span>
 </footer>
 
 </body>

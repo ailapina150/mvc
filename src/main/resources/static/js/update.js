@@ -28,7 +28,7 @@
         newEducation.classList.add('education-elem');
         newEducation.setAttribute('id', `educationRow_${nextIndex}`);
         newEducation.innerHTML = `
-        <div id="educationRow_${nextIndex}" class="education-row" >
+        <div id="educationRow_${nextIndex}" class="education-row" > 
             <input id="educationId_${nextIndex}" name="educations[${nextIndex}].id"  type="hidden" />
             <label for="yearStart_${nextIndex}">Year Start:</label>
             <input id="yearStart_${nextIndex}" type="number" name="educations[${nextIndex}].yearStart" required>
@@ -51,11 +51,12 @@
         const nextIndex = taskContainer.childElementCount; // Get the next index
         const newTask = document.createElement('div');
 
-        newTask.classList.add('task-elem');
+        newTask.classList.add('task-row');
         newTask.setAttribute('id', 'taskRow_' + index + '_'+ nextIndex);
         newTask.innerHTML = `
-        <div id="taskRow_${index}_${nextIndex}" class="task-row" >
-            <textarea id = "task_${index}_${nextIndex}"> </textarea>
+        <div id="taskRow_${index}_${nextIndex}">
+            <input id = "taskId_${index}_${nextIndex}" name="projects[${index}].tasks[${nextIndex}].id"  type="hidden"> 
+            <textarea id = "task_${index}_${nextIndex}"  name="projects[${index}].tasks[${nextIndex}].description"  required> </textarea>
             <button type="button" class="action" onclick="delTask( ${index} , ${nextIndex})">Delete Task</button>
         </div>
         `;
@@ -71,26 +72,7 @@
         newProject.classList.add('project-elem');
         newProject.setAttribute('id', `projectRow_${nextIndex}`);
 
-        newProject.innerHTML = `
-        <div id="projectRow_${nextIndex}" class="project-row" >
-            <input id = "projectId_${nextIndex}" name="projects[${nextIndex}].id"  type="hidden" />                         
-            <label for ="project-name_${nextIndex}">Name:</label>
-            <input id = "project-name_${nextIndex}" type="number" name="projects[${nextIndex}].name" required>   
-            <label for = "description_${nextIndex}">Description:</label>
-            <input id = "project-name_${nextIndex}" type="number" name="projects[${nextIndex}].description" required>
-            <label> Tasks:</label>
-            <div id = "tasks_${nextIndex}">
-                <div id="taskRow_${nextIndex}_0" class="task-row" >
-                    <textarea id = "task_${nextIndex}_0" "> </textarea>
-                    <button type="button" class="action" onclick="delTask( ${nextIndex},0)">Delete Task</button>
-                </div>
-            </div>
-            <div class="delete-button">
-                <button type="button" class="action" onclick="addTask(${nextIndex})" >Add Task</button>
-                <button type="button" class="action" onclick="delProject(${nextIndex})" >Delete Project</button>
-            </div>                             
-         </div>
-        `;
+        newProject.innerHTML = `\n        <div id="projectRow_${nextIndex}" class="project-row" >\n            <input id = "projectId_${nextIndex}" name="projects[${nextIndex}].id"  type="hidden" />                         \n            <label for ="project-name_${nextIndex}">Name:</label>\n            <input id = "project-name_${nextIndex}" type="number" name="projects[${nextIndex}].name" required>   \n            <label for = "description_${nextIndex}">Description:</label>\n            <input id = "project-name_${nextIndex}" type="number" name="projects[${nextIndex}].description" required>\n            <label> Tasks:</label>\n            <div id = "tasks_${nextIndex}">\n                <div id="taskRow_${nextIndex}_0" class="task-row" >\n                    <input id = "taskId_${nextIndex}_0" name="projects[${nextIndex}].tasks[0].id"  type="hidden" /> \n                    <textarea id = "task_${nextIndex}_0" type = "text" name="projects[${nextIndex}].tasks[0].description" required></textarea>\n                    <button type="button" class="action" onclick="delTask( ${nextIndex},0)">Delete Task</button>\n                </div>\n            </div>\n            <div class="delete-button">\n                <button type="button" class="action" onclick="addTask(${nextIndex})" >Add Task</button>\n                <button type="button" class="action" onclick="delProject(${nextIndex})" >Delete Project</button>\n            </div>                             \n         </div>\n        `;
         projectContainer.appendChild(newProject)
     }
 

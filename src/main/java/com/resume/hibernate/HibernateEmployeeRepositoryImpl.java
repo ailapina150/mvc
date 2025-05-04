@@ -1,6 +1,6 @@
 package com.resume.hibernate;
 
-import com.resume.EmployeeRepository;
+import com.resume.Port;
 import com.resume.model.Education;
 import com.resume.model.Employee;
 import com.resume.model.Project;
@@ -12,15 +12,18 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 @Primary
-public class HibernateEmployeeRepositoryImpl implements EmployeeRepository<Employee> {
+public class HibernateEmployeeRepositoryImpl implements Port<Employee> {
 
     SessionFactory sessionFactory;
+
     HibernateEmployeeRepositoryImpl() {
+
         try {
             sessionFactory = new Configuration()
                     .configure()
@@ -42,8 +45,9 @@ public class HibernateEmployeeRepositoryImpl implements EmployeeRepository<Emplo
 //        }
         try (Session session = sessionFactory.openSession()) {
             System.out.println("*******findAll********");
-            List<Employee> list = session.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
-            return list;
+            return session
+                    .createQuery("SELECT e FROM Employee e", Employee.class)
+                    .getResultList();
         }
     }
 
@@ -73,15 +77,22 @@ public class HibernateEmployeeRepositoryImpl implements EmployeeRepository<Emplo
     }
 
     @Override
-    public Employee save (Employee employee) {;
+    public Employee save (Employee employee) {
         try (Session session = sessionFactory.openSession()) {
+            if(employee == null) return employee;
             System.out.println("*******save********");
+            System.out.println(employee);
             session.beginTransaction();
-            Employee oldEmployee = session.get(Employee.class, employee.getId());
-            if(oldEmployee != null) {
-                session.delete(oldEmployee);
+            if(employee.getId() !=null && session.get(Employee.class, employee.getId())== null) {
+                System.out.println("*******merge********");
+                session.merge(employee);
+                deleteEducations(session, employee.getId());
+                deleteProjects(session, employee.getId());
+                deleteTasks(session,employee.getId());
+            }else {
+                System.out.println("*******persist********");
+                session.persist(employee);
             }
-            session.save(employee);
             session.getTransaction().commit();
             return employee;
         }
@@ -94,9 +105,67 @@ public class HibernateEmployeeRepositoryImpl implements EmployeeRepository<Emplo
             session.beginTransaction();
             Employee employee = session.get(Employee.class, id);
             if (employee != null){
-                session.delete(employee);
+                session.remove(employee);
             }
             session.getTransaction().commit();
        }
     }
+
+    public void deleteEducations(Session session, Long id){
+        List<Education> educations = session
+                .createQuery("SELECT e FROM Education e", Education.class)
+                .getResultList()
+                .stream()
+                .filter(e->e.getEmployee().getId().equals(id))
+                .toList();
+        Employee employee = session.get(Employee.class, id);
+        if(employee != null) {
+            var educationIds = employee.getEducations().stream().map(Education::getId).toList();
+            for (Education education : educations) {
+                if (!educationIds.contains(education.getId())) {
+                    session.remove(education);
+                }
+            }
+        }
+    }
+
+    public void deleteProjects(Session session, Long id){
+        List<Project> projects = session
+                .createQuery("SELECT p FROM Project p", Project.class)
+                .getResultList()
+                .stream()
+                .filter(e->e.getEmployee().getId().equals(id))
+                .toList();
+        Employee employee = session.get(Employee.class, id);
+        if(employee != null) {
+            var projectIds = employee.getProjects().stream().map(Project::getId).toList();
+            for (Project project : projects) {
+                if (!projectIds.contains(project.getId())) {
+                    session.remove(project);
+                }
+            }
+        }
+    }
+
+    public void deleteTasks(Session session, Long id){
+        List<Task> tasks = session
+                .createQuery("SELECT t FROM Task t", Task.class)
+                .getResultList()
+                .stream()
+                .filter(e->e.getProject().getEmployee().getId().equals(id))
+                .toList();
+        Employee employee = session.get(Employee.class, id);
+        if(employee != null) {
+            List<Integer> taskIds = new ArrayList<>();
+            for(Project project : employee.getProjects()){
+                taskIds.addAll(project.getTasks().stream().map(Task::getId).toList());
+            }
+            for (Task task : tasks) {
+                if (!taskIds.contains(task.getId())) {
+                    session.remove(task);
+                }
+            }
+        }
+    }
+
 }

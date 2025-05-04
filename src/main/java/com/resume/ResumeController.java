@@ -3,8 +3,7 @@ package com.resume;
 import com.resume.model.*;
 import lombok.AllArgsConstructor;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -26,7 +25,7 @@ import java.util.Objects;
 @RequestMapping("/resumes")
 public class ResumeController {
 
-    EmployeeRepository<Employee> employeeRepository;
+    Port<Employee> employeeRepository;
 
     @GetMapping("/{id}")
     public String getResume(Model model, @PathVariable Long id) {
@@ -69,14 +68,14 @@ public class ResumeController {
 
     @GetMapping("/create")
     public String createResume(Model model){
-        Long id = employeeRepository.findAll()
-                .stream()
-                .map(Employee::getId)
-                .min(Long::compareTo)
-                .orElse(0L);
+//        Long id = employeeRepository.findAll()
+//                .stream()
+//                .map(Employee::getId)
+//                .max(Long::compareTo)
+//                .orElse(0L);
 
         Employee employee = Employee.builder()
-                .id(id + 1)
+             //   .id(id + 1)
                 .projects(List.of( Project.builder().tasks(List.of(Task.builder().build())).build()))
                 .educations(List.of(new Education()))
                 .build();
@@ -107,7 +106,7 @@ public class ResumeController {
             if(project.getTasks()!=null) {
                 project.setTasks(project.getTasks()
                         .stream()
-                        .filter(e -> e != null && e.getTask() != null && !e.getTask().isEmpty())
+                        .filter(e -> e != null && e.getDescription() != null && !e.getDescription().isEmpty())
                         .toList());
                 project.getTasks().forEach(e->e.setProject(project));
             }

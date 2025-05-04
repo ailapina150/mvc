@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http - FORBIDDEN - www.thymeleaf.org">
-<head>
-
-</head>
-<html lang="en">
+<html xmlns:th="http - FORBIDDEN - www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>resume</title>
@@ -11,10 +7,10 @@
 </head>
 <body>
 <!--    HEADER ----------------------------------------------------------->
-<header id = "home">
-    <h1 th:text="${employee.name}"/>
-    <h2 th:text="${employee.position}"/>
-    <h3 th:text="${employee.format}"/>
+<header id="home">
+    <h1 th:text="${employee.name}"></h1>
+    <h2 th:text="${employee.position}"></h2>
+    <h3 th:text="${employee.format}"></h3>
     <nav>
         <a th:href=@{/resumes}>Home </a>
         <a href="#summary">Summary </a>
@@ -29,16 +25,16 @@
     <section class="summary" id="summary">
         <h2>Summary</h2>
         <div>
-           <img th:src="${employee.photo}"/>
+            <img th:src="${employee.photo}"/>
             <div>
-                 <ul>
-                     <li>tg: <span th:text ="${employee.tg}"/></li>
-                     <li>phone: + <span th:text ="${employee.phone}"/></li>
-                     <li>mail: <span th:text ="${employee.email}"/></li>
-                 </ul>
+                <ul>
+                    <li>tg: <span th:text="${employee.tg}"></span></li>
+                    <li>phone: + <span th:text="${employee.phone}"></span></li>
+                    <li>mail: <span th:text="${employee.email}"></span></li>
+                </ul>
             </div>
         </div>
-        <p th:text ="${employee.summary}"/>
+        <p th:text="${employee.summary}"></p>
     </section>
     <hr>
 
@@ -46,38 +42,38 @@
     <section class="experience" id="experience">
         <h2>Experience</h2>
         <ul>
-        <li th:each="project : ${employee.projects}">
-            <h3 th:text ="${project.name}"/>
-            <p><b>Description:</b> <span th:text ="${project.description}"/></p>
-            <ul><b>Tasks:</b>
-                <li class="tasks-list" th:each="task : ${project.tasks}">
-                    <span th:text ="${task.task}"/>
-                </li>
-            </ul>
-        </li>
-    </ul>
+            <li th:each="project : ${employee.projects}">
+                <h3 th:text="${project.name}"></h3>
+                <p><b>Description:</b> <span th:text="${project.description}"></span></p>
+                <ul><b>Tasks:</b>
+                    <li class="tasks-list" th:each="task : ${project.tasks}">
+                        <span th:text="${task.description}"></span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </section>
 
     <!--    Секция SKILLS ------------------------------------------------------>
     <section class="skills" id="skills">
         <h2>Skills</h2>
-        <span  th:each="skill : ${employee.skills}">
-            <span th:text ="${skill.title}"/>,
-        </span >
+        <span th:each="skill : ${employee.skills}">
+            <span th:text="${skill.title}"></span>,
+        </span>
         <span>English </span>
-        <span th:text ="${employee.englishLevel}"/>
+        <span th:text="${employee.englishLevel}"></span>
     </section>
     <hr>
 
     <!--    Секция EDUCATION -------------------------------------------------->
     <section class="education" id="education">
         <h2>Education</h2>
-        <ul >
-            <li class="tasks-list" th:each="education : ${employee.educations}" >
-                <span th:text ="${education.yearStart}"/>
-                -  <span th:text ="${education.yearEnd}"/>
-                <span th:text ="${education.university}"/>
-                Degree: <span th:text ="${education.degree}"/>
+        <ul>
+            <li class="tasks-list" th:each="education : ${employee.educations}">
+                <span th:text="${education.yearStart}"></span>
+                - <span th:text="${education.yearEnd}"></span>
+                <span th:text="${education.university}"></span>
+                Degree: <span th:text="${education.degree}"></span>
             </li>
 
         </ul>
@@ -86,7 +82,7 @@
 <hr>
 <!--    FOOTER ---------------------------------------------------------------->
 <footer>
-    <p>&copy; 2025 resume <span th:text="${employee.name}"/>
+    <p>&copy; 2025 resume <span th:text="${employee.name}"></span></p>
 </footer>
 </body>
 </html>
