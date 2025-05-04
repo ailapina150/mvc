@@ -15,10 +15,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Base64;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
+import static com.resume.model.Skills.JAVA;
+import static java.util.List.of;
 
 @Controller
 @AllArgsConstructor
@@ -57,6 +57,7 @@ public class ResumeController {
     public String editResume(Model model,@PathVariable Long id){
         if(employeeRepository.findById(id).isPresent()) {
             Employee employee = employeeRepository.findById(id).get();
+            System.out.println("*****" + employee);
             model.addAttribute("employee", employee);
             model.addAttribute("title", "Update");
             model.addAttribute("skillsList", Skills.values());
@@ -68,23 +69,16 @@ public class ResumeController {
 
     @GetMapping("/create")
     public String createResume(Model model){
-//        Long id = employeeRepository.findAll()
-//                .stream()
-//                .map(Employee::getId)
-//                .max(Long::compareTo)
-//                .orElse(0L);
 
         Employee employee = Employee.builder()
-             //   .id(id + 1)
                 .projects(List.of( Project.builder().tasks(List.of(Task.builder().build())).build()))
                 .educations(List.of(new Education()))
+                .skill(new ArrayList<>())
                 .build();
-        if(employee == null){
-            return "redirect:/resumes";
-        }
+        System.out.println("*****" + employee);
         model.addAttribute("employee",employee);
         model.addAttribute("title","Create");
-        model.addAttribute("skillsList", Skills.titles());
+        model.addAttribute("skillsList", Skills.values());
         model.addAttribute("englishLevelsList", EnglishLevels.values());
         return "update";
     }
@@ -93,11 +87,15 @@ public class ResumeController {
     public String updateContact(@ModelAttribute("employee") Employee employee,
                                 @RequestParam("photoFileName") MultipartFile photoFile) {
         System.out.println("*****"+employee);
-        employee.setEducations(employee.getEducations().stream().filter(Objects::nonNull).toList());
-        employee.setProjects(employee.getProjects().stream().filter(Objects::nonNull).toList());
-        for(Education education: employee.getEducations()){
-            education.setEmployee(employee);
+        if(employee.getEducations()!= null){
+            employee.setEducations(employee.getEducations().stream().filter(Objects::nonNull).toList());
+            for (Education education : employee.getEducations()) {
+                education.setEmployee(employee);
+            }
+        }else{
+            employee.setEducations(null);
         }
+        employee.setProjects(employee.getProjects().stream().filter(Objects::nonNull).toList());
         for(Project project: employee.getProjects()){
             project.setEmployee(employee);
         }

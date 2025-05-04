@@ -57,7 +57,7 @@
     <!--    Секция SKILLS ------------------------------------------------------>
     <section class="skills" id="skills">
         <h2>Skills</h2>
-        <span th:each="skill : ${employee.skills}">
+        <span th:each="skill : ${employee.skill}">
             <span th:text="${skill.title}"></span>,
         </span>
         <span>English </span>
@@ -68,7 +68,7 @@
     <!--    Секция EDUCATION -------------------------------------------------->
     <section class="education" id="education">
         <h2>Education</h2>
-        <ul>
+        <ul th:if="${employee.educations != null and employee.educations.size() > 0}">
             <li class="tasks-list" th:each="education : ${employee.educations}">
                 <span th:text="${education.yearStart}"></span>
                 - <span th:text="${education.yearEnd}"></span>

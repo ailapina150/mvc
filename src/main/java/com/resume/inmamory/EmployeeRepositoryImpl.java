@@ -30,7 +30,7 @@ public class EmployeeRepositoryImpl implements Port<Employee> {
                         I have experience in optimizing high-load microservice applications,
                         as well as creating applications from scratch
                         """)
-                .educations(List.of(
+                .educations(of(
                       Education.builder()
                               .id(1)
                               .yearStart(2001)
@@ -97,11 +97,58 @@ public class EmployeeRepositoryImpl implements Port<Employee> {
                                 ))
                                 .build()
                 ))
-                .skills(of(Skills.JAVA, Skills.SPRING_CORE,Skills.SPRING_BOOT, Skills.SPRING_CLOUD,
-                        Skills.SPRING_DATA, Skills.SPRING_AOP, Skills.HIBERNATE, Skills.LOMBOK, Skills.SWAGGER,
-                        Skills.POSTGRESQL, Skills.MYSQL, Skills.REDIS, Skills.GRADLE, Skills.MAVEN, Skills.GIT,
-                        Skills.JUNIT, Skills.MOCKITO, Skills.TEST_CONTAINERS, Skills.KAFKA, Skills.RABBIT_MQ,
-                        Skills.OOP, Skills.GOF, Skills.REST, Skills.DRY, Skills.KISS, Skills.SOLID))
+                .skill(of(Skills.JAVA,
+                         Skills.SPRING_CORE,
+                         Skills.SPRING_BOOT,
+                         Skills.SPRING_CLOUD,
+                         Skills.SPRING_DATA,
+                         Skills.SPRING_AOP,
+                         Skills.HIBERNATE,
+                         Skills.LOMBOK,
+                         Skills.SWAGGER,
+                         Skills.POSTGRESQL,
+                         Skills.MYSQL,
+                         Skills.REDIS,
+                         Skills.GRADLE,
+                         Skills.MAVEN,
+                         Skills.GIT,
+                         Skills.JUNIT,
+                         Skills.MOCKITO,
+                         Skills.TEST_CONTAINERS,
+                         Skills.KAFKA,
+                         Skills.RABBIT_MQ,
+                         Skills.OOP,
+                         Skills.GOF,
+                         Skills.REST,
+                         Skills.DRY,
+                         Skills.KISS,
+                         Skills.SOLID))
+//                .skills(of( new EmployeeSkills(Skills.JAVA),
+//                        new EmployeeSkills(Skills.SPRING_CORE),
+//                        new EmployeeSkills(Skills.SPRING_BOOT),
+//                        new EmployeeSkills(Skills.SPRING_CLOUD),
+//                        new EmployeeSkills(Skills.SPRING_DATA),
+//                        new EmployeeSkills(Skills.SPRING_AOP),
+//                        new EmployeeSkills(Skills.HIBERNATE),
+//                        new EmployeeSkills(Skills.LOMBOK),
+//                        new EmployeeSkills(Skills.SWAGGER),
+//                        new EmployeeSkills(Skills.POSTGRESQL),
+//                        new EmployeeSkills(Skills.MYSQL),
+//                        new EmployeeSkills(Skills.REDIS),
+//                        new EmployeeSkills(Skills.GRADLE),
+//                        new EmployeeSkills(Skills.MAVEN),
+//                        new EmployeeSkills(Skills.GIT),
+//                        new EmployeeSkills(Skills.JUNIT),
+//                        new EmployeeSkills(Skills.MOCKITO),
+//                        new EmployeeSkills( Skills.TEST_CONTAINERS),
+//                        new EmployeeSkills( Skills.KAFKA),
+//                        new EmployeeSkills( Skills.RABBIT_MQ),
+//                        new EmployeeSkills(Skills.OOP),
+//                        new EmployeeSkills(Skills.GOF),
+//                        new EmployeeSkills( Skills.REST),
+//                        new EmployeeSkills( Skills.DRY),
+//                        new EmployeeSkills( Skills.KISS),
+//                        new EmployeeSkills( Skills.SOLID)))
                 .englishLevel(EnglishLevels.B1)
                 .build();
 
@@ -148,8 +195,26 @@ public class EmployeeRepositoryImpl implements Port<Employee> {
                                 ))
                                 .build()
                 ))
-                .skills(of(Skills.JAVA, Skills.SPRING_CORE,Skills.SPRING_BOOT, Skills.SPRING_CLOUD,
-                        Skills.SPRING_DATA, Skills.SPRING_AOP, Skills.HIBERNATE, Skills.LOMBOK))
+                .skill(of(Skills.JAVA,
+                        Skills.SPRING_CORE,
+                        Skills.SPRING_BOOT,
+                        Skills.SPRING_CLOUD,
+                        Skills.SPRING_DATA,
+                        Skills.SPRING_AOP,
+                        Skills.HIBERNATE,
+                        Skills.LOMBOK,
+                        Skills.SWAGGER,
+                        Skills.POSTGRESQL))
+//                .skills(of( new EmployeeSkills(Skills.JAVA),
+//                        new EmployeeSkills(Skills.SPRING_CORE),
+//                        new EmployeeSkills(Skills.SPRING_BOOT),
+//                        new EmployeeSkills(Skills.SPRING_CLOUD),
+//                        new EmployeeSkills(Skills.SPRING_DATA),
+//                        new EmployeeSkills(Skills.SPRING_AOP),
+//                        new EmployeeSkills(Skills.HIBERNATE),
+//                        new EmployeeSkills(Skills.LOMBOK),
+//                        new EmployeeSkills(Skills.SWAGGER),
+//                        new EmployeeSkills(Skills.POSTGRESQL)))
                 .englishLevel(EnglishLevels.C1)
                 .build();
         EMPLOYEES.add(employee1);

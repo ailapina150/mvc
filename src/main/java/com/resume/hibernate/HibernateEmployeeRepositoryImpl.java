@@ -1,10 +1,7 @@
 package com.resume.hibernate;
 
 import com.resume.Port;
-import com.resume.model.Education;
-import com.resume.model.Employee;
-import com.resume.model.Project;
-import com.resume.model.Task;
+import com.resume.model.*;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -68,6 +65,7 @@ public class HibernateEmployeeRepositoryImpl implements Port<Employee> {
             if(employee != null) {
                 Hibernate.initialize(employee.getProjects());//for LazyInitializationException
                 Hibernate.initialize(employee.getEducations());
+                Hibernate.initialize(employee.getSkill());
                 for(int i = 0; i < employee.getProjects().size(); i++){
                     Hibernate.initialize(employee.getProjects().get(i).getTasks());
                 }
@@ -83,7 +81,7 @@ public class HibernateEmployeeRepositoryImpl implements Port<Employee> {
             System.out.println("*******save********");
             System.out.println(employee);
             session.beginTransaction();
-            if(employee.getId() !=null && session.get(Employee.class, employee.getId())== null) {
+            if(employee.getId() !=null && session.get(Employee.class, employee.getId()) != null) {
                 System.out.println("*******merge********");
                 session.merge(employee);
                 deleteEducations(session, employee.getId());

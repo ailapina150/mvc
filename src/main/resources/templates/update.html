@@ -43,7 +43,7 @@
             <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 
             <label for="phone">Phone:</label>
-            <input type="tel" id="phone" th:field="*{phone}"/>
+            <input type="number" id="phone" th:field="*{phone}"/>
             <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
 
             <label for="photoFileName">Change a profile picture:</label>
@@ -94,7 +94,7 @@
         <section class="skills" id="skills-class">
             <h2>Skills</h2>
             <label for="skills">Skills:</label>
-            <select id="skills" th:field="*{skills}" multiple="multiple">
+            <select id="skills" th:field="*{skill}" multiple="multiple">
                 <option th:each="skill : ${skillsList}" th:value="${skill}" th:text="${skill}"></option>
             </select>
             <label for="englishLevel">English level:</label>

@@ -72,7 +72,26 @@
         newProject.classList.add('project-elem');
         newProject.setAttribute('id', `projectRow_${nextIndex}`);
 
-        newProject.innerHTML = `\n        <div id="projectRow_${nextIndex}" class="project-row" >\n            <input id = "projectId_${nextIndex}" name="projects[${nextIndex}].id"  type="hidden" />                         \n            <label for ="project-name_${nextIndex}">Name:</label>\n            <input id = "project-name_${nextIndex}" type="number" name="projects[${nextIndex}].name" required>   \n            <label for = "description_${nextIndex}">Description:</label>\n            <input id = "project-name_${nextIndex}" type="number" name="projects[${nextIndex}].description" required>\n            <label> Tasks:</label>\n            <div id = "tasks_${nextIndex}">\n                <div id="taskRow_${nextIndex}_0" class="task-row" >\n                    <input id = "taskId_${nextIndex}_0" name="projects[${nextIndex}].tasks[0].id"  type="hidden" /> \n                    <textarea id = "task_${nextIndex}_0" type = "text" name="projects[${nextIndex}].tasks[0].description" required></textarea>\n                    <button type="button" class="action" onclick="delTask( ${nextIndex},0)">Delete Task</button>\n                </div>\n            </div>\n            <div class="delete-button">\n                <button type="button" class="action" onclick="addTask(${nextIndex})" >Add Task</button>\n                <button type="button" class="action" onclick="delProject(${nextIndex})" >Delete Project</button>\n            </div>                             \n         </div>\n        `;
+        newProject.innerHTML = `        
+        <div id="projectRow_${nextIndex}" class="project-row" >          
+            <input id = "projectId_${nextIndex}" name="projects[${nextIndex}].id"  type="hidden" />           
+            <label for ="project-name_${nextIndex}">Name:</label>            
+            <input id = "project-name_${nextIndex}" type="text" name="projects[${nextIndex}].name" required>            
+            <label for = "description_${nextIndex}">Description:</label>          
+            <input id = "project-name_${nextIndex}" type="text" name="projects[${nextIndex}].description" required>            
+            <label> Tasks:</label>           
+            <div id = "tasks_${nextIndex}">                
+                <div id="taskRow_${nextIndex}_0" class="task-row" >                  
+                    <input id = "taskId_${nextIndex}_0" name="projects[${nextIndex}].tasks[0].id"  type="hidden" />                 
+                    <textarea id = "task_${nextIndex}_0" type = "text" name="projects[${nextIndex}].tasks[0].description" required></textarea>                  
+                    <button type="button" class="action" onclick="delTask( ${nextIndex},0)">Delete Task</button>                
+                </div>        
+            </div>           
+            <div class="delete-button">                
+                <button type="button" class="action" onclick="addTask(${nextIndex})" >Add Task</button>               
+                <button type="button" class="action" onclick="delProject(${nextIndex})" >Delete Project</button>           
+            </div>
+        </div>`;
         projectContainer.appendChild(newProject)
     }
 

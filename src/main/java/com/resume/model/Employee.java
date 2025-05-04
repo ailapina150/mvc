@@ -32,8 +32,9 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Project> projects;
 
-    @Transient
-    private List<Skills> skills;
+    @ElementCollection
+    @CollectionTable(name = "skills", joinColumns = @JoinColumn(name = "id_employee"))
+    private List<Skills> skill;
 
     @Column(name ="english_level")
     @Enumerated(EnumType.ORDINAL)
