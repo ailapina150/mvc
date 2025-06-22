@@ -25,8 +25,10 @@ public class Project {
     @JoinColumn(name = "id_employee")
     private Employee employee;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    @ElementCollection
+    @CollectionTable(name = "tasks", joinColumns = @JoinColumn(name = "id_project"))
+    @Column(name = "description")
+    private List<String> tasks;
 
     @Override
     public String toString() {
