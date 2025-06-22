@@ -1,4 +1,4 @@
-package com.resume.hibernate;
+package com.resume;
 
 import com.resume.Port;
 import com.resume.model.*;
@@ -9,7 +9,6 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +25,6 @@ public class HibernateEmployeeRepositoryImpl implements Port<Employee> {
                     .configure()
                     .addAnnotatedClass(Employee.class)
                     .addAnnotatedClass(Project.class)
-                    .addAnnotatedClass(Task.class)
                     .addAnnotatedClass(Education.class)
                     //  .addPackage("com.resume.model")
                     .buildSessionFactory();
@@ -61,7 +59,7 @@ public class HibernateEmployeeRepositoryImpl implements Port<Employee> {
 //                    .setMaxResults(1) // Limit to at most one result
 //                    .uniqueResult();
 
-            Employee employee = session.get(Employee.class, id);
+            Employee employee = session.find(Employee.class, id);
             if(employee != null) {
                 Hibernate.initialize(employee.getProjects());//for LazyInitializationException
                 Hibernate.initialize(employee.getEducations());
@@ -81,12 +79,11 @@ public class HibernateEmployeeRepositoryImpl implements Port<Employee> {
             System.out.println("*******save********");
             System.out.println(employee);
             session.beginTransaction();
-            if(employee.getId() !=null && session.get(Employee.class, employee.getId()) != null) {
+            if(employee.getId() !=null && session.find(Employee.class, employee.getId()) != null) {
                 System.out.println("*******merge********");
                 session.merge(employee);
                 deleteEducations(session, employee.getId());
                 deleteProjects(session, employee.getId());
-                deleteTasks(session,employee.getId());
             }else {
                 System.out.println("*******persist********");
                 session.persist(employee);
@@ -140,27 +137,6 @@ public class HibernateEmployeeRepositoryImpl implements Port<Employee> {
             for (Project project : projects) {
                 if (!projectIds.contains(project.getId())) {
                     session.remove(project);
-                }
-            }
-        }
-    }
-
-    public void deleteTasks(Session session, Long id){
-        List<Task> tasks = session
-                .createQuery("SELECT t FROM Task t", Task.class)
-                .getResultList()
-                .stream()
-                .filter(e->e.getProject().getEmployee().getId().equals(id))
-                .toList();
-        Employee employee = session.get(Employee.class, id);
-        if(employee != null) {
-            List<Integer> taskIds = new ArrayList<>();
-            for(Project project : employee.getProjects()){
-                taskIds.addAll(project.getTasks().stream().map(Task::getId).toList());
-            }
-            for (Task task : tasks) {
-                if (!taskIds.contains(task.getId())) {
-                    session.remove(task);
                 }
             }
         }

@@ -41,13 +41,14 @@
     <!--    Секция EXPERIENCE -------------------------------------------------->
     <section class="experience" id="experience">
         <h2>Experience</h2>
-        <ul>
+        <ul th:if="${employee.projects != null and employee.projects.size() > 0}">
             <li th:each="project : ${employee.projects}">
                 <h3 th:text="${project.name}"></h3>
                 <p><b>Description:</b> <span th:text="${project.description}"></span></p>
                 <ul><b>Tasks:</b>
                     <li class="tasks-list" th:each="task : ${project.tasks}">
-                        <span th:text="${task.description}"></span>
+<!--                        <span th:text="${task.description}"></span>-->
+                        <span th:text="${task}"></span>
                     </li>
                 </ul>
             </li>

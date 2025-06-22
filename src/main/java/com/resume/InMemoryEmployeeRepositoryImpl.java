@@ -1,6 +1,5 @@
-package com.resume.inmamory;
+package com.resume;
 
-import com.resume.Port;
 import com.resume.model.*;
 
 import org.springframework.stereotype.Repository;
@@ -12,7 +11,7 @@ import java.util.Optional;
 import static java.util.List.*;
 
 @Repository
-public class EmployeeRepositoryImpl implements Port<Employee> {
+public class InMemoryEmployeeRepositoryImpl implements Port<Employee> {
     List<Employee> EMPLOYEES = new ArrayList<>();
     {
         Employee employee1 = Employee
@@ -58,42 +57,42 @@ public class EmployeeRepositoryImpl implements Port<Employee> {
                                 .name("Project for the Ministry of Nature of the Republic of Belarus")
                                 .description("Microservice RestFul web application")
                                 .tasks(of(
-                                        Task.builder().description("Developing a microservice responsible for creating reports (using SpringBoot)").build(),
-                                        Task.builder().description("Outputting reports to Excel and Word using the Apache POI library, working with the Jasper Reports application").build(),
-                                        Task.builder().description("Writing complex queries to the database in native SQL (PostgreSQL)").build(),
-                                        Task.builder().description("Mapping entities to Java objects (Hibernate)").build(),
-                                        Task.builder().description("Determining performance bottlenecks and optimizing SQL queries").build(),
-                                        Task.builder().description("Working with Stream API and multithreading").build(),
-                                        Task.builder().description("Working with message brokers (Kafka)").build(),
-                                        Task.builder().description("Working with a noSQL database (Redis)").build(),
-                                        Task.builder().description("Connecting Swagger for automatic generation of API descriptions").build(),
-                                        Task.builder().description("Code review and code refactoring").build(),
-                                        Task.builder().description("Creating algorithms for statistical and probabilistic calculations").build(),
-                                        Task.builder().description("Assistance to analysts in creating technical specifications").build()
+                                        "Developing a microservice responsible for creating reports (using SpringBoot)",
+                                        "Outputting reports to Excel and Word using the Apache POI library, working with the Jasper Reports application",
+                                        "Writing complex queries to the database in native SQL (PostgreSQL)",
+                                        "Mapping entities to Java objects (Hibernate)",
+                                        "Determining performance bottlenecks and optimizing SQL queries",
+                                        "Working with Stream API and multithreading",
+                                        "Working with message brokers (Kafka)",
+                                        "Working with a noSQL database (Redis)",
+                                        "Connecting Swagger for automatic generation of API descriptions",
+                                        "Code review and code refactoring",
+                                        "Creating algorithms for statistical and probabilistic calculations",
+                                        "Assistance to analysts in creating technical specifications"
                                 ))
                                 .build(),
                         Project.builder()
                                 .name("Project for the Ministry of Transport of the Republic of Belarus")
                                 .description("Monolithic RestFul web application")
                                 .tasks(of(
-                                        Task.builder().description("Creating a demo application from scratch").build(),
-                                        Task.builder().description("Development of calculation algorithms").build(),
-                                        Task.builder().description("Development of an architectural solution using the MVC pattern").build(),
-                                        Task.builder().description("Development of a REST API").build(),
-                                        Task.builder().description("Database design").build(),
-                                        Task.builder().description("Deployment of the database in Docker").build(),
-                                        Task.builder().description("Implementation of all application logic").build(),
-                                        Task.builder().description("Writing build scripts on maven").build()
+                                        "Creating a demo application from scratch",
+                                        "Development of calculation algorithms",
+                                        "Development of an architectural solution using the MVC pattern",
+                                        "Development of a REST API",
+                                        "Database design",
+                                        "Deployment of the database in Docker",
+                                        "Implementation of all application logic",
+                                        "Writing build scripts on maven"
                                 ))
                                 .build(),
                         Project.builder()
                                 .name("Car leasing project")
                                 .description("Microservice desktop application")
                                 .tasks(of(
-                                        Task.builder().description("Working with multithreading").build(),
-                                        Task.builder().description("Working with message brokers (RabbitMQ)").build(),
-                                        Task.builder().description("Writing JUnit and integration tests (parameterized tests, Mockito, TestContaners)").build(),
-                                        Task.builder().description("Working on SCRUM methodology in a team of 6 people").build()
+                                        "Working with multithreading",
+                                        "Working with message brokers (RabbitMQ)",
+                                        "Writing JUnit and integration tests (parameterized tests, Mockito, TestContaners)",
+                                        "Working on SCRUM methodology in a team of 6 people"
                                 ))
                                 .build()
                 ))
@@ -123,32 +122,6 @@ public class EmployeeRepositoryImpl implements Port<Employee> {
                          Skills.DRY,
                          Skills.KISS,
                          Skills.SOLID))
-//                .skills(of( new EmployeeSkills(Skills.JAVA),
-//                        new EmployeeSkills(Skills.SPRING_CORE),
-//                        new EmployeeSkills(Skills.SPRING_BOOT),
-//                        new EmployeeSkills(Skills.SPRING_CLOUD),
-//                        new EmployeeSkills(Skills.SPRING_DATA),
-//                        new EmployeeSkills(Skills.SPRING_AOP),
-//                        new EmployeeSkills(Skills.HIBERNATE),
-//                        new EmployeeSkills(Skills.LOMBOK),
-//                        new EmployeeSkills(Skills.SWAGGER),
-//                        new EmployeeSkills(Skills.POSTGRESQL),
-//                        new EmployeeSkills(Skills.MYSQL),
-//                        new EmployeeSkills(Skills.REDIS),
-//                        new EmployeeSkills(Skills.GRADLE),
-//                        new EmployeeSkills(Skills.MAVEN),
-//                        new EmployeeSkills(Skills.GIT),
-//                        new EmployeeSkills(Skills.JUNIT),
-//                        new EmployeeSkills(Skills.MOCKITO),
-//                        new EmployeeSkills( Skills.TEST_CONTAINERS),
-//                        new EmployeeSkills( Skills.KAFKA),
-//                        new EmployeeSkills( Skills.RABBIT_MQ),
-//                        new EmployeeSkills(Skills.OOP),
-//                        new EmployeeSkills(Skills.GOF),
-//                        new EmployeeSkills( Skills.REST),
-//                        new EmployeeSkills( Skills.DRY),
-//                        new EmployeeSkills( Skills.KISS),
-//                        new EmployeeSkills( Skills.SOLID)))
                 .englishLevel(EnglishLevels.B1)
                 .build();
 
@@ -188,10 +161,10 @@ public class EmployeeRepositoryImpl implements Port<Employee> {
                                 .name("Car leasing project")
                                 .description("Microservice desktop application")
                                 .tasks(of(
-                                        Task.builder().description("Working with multithreading").build(),
-                                        Task.builder().description("Working with message brokers (RabbitMQ)").build(),
-                                        Task.builder().description("Writing JUnit and integration tests (parameterized tests, Mockito, TestContaners)").build(),
-                                        Task.builder().description("Working on SCRUM methodology in a team of 6 people").build()
+                                        "Working with multithreading",
+                                        "Working with message brokers (RabbitMQ)",
+                                        "Writing JUnit and integration tests (parameterized tests, Mockito, TestContaners)",
+                                        "Working on SCRUM methodology in a team of 6 people"
                                 ))
                                 .build()
                 ))
@@ -205,16 +178,6 @@ public class EmployeeRepositoryImpl implements Port<Employee> {
                         Skills.LOMBOK,
                         Skills.SWAGGER,
                         Skills.POSTGRESQL))
-//                .skills(of( new EmployeeSkills(Skills.JAVA),
-//                        new EmployeeSkills(Skills.SPRING_CORE),
-//                        new EmployeeSkills(Skills.SPRING_BOOT),
-//                        new EmployeeSkills(Skills.SPRING_CLOUD),
-//                        new EmployeeSkills(Skills.SPRING_DATA),
-//                        new EmployeeSkills(Skills.SPRING_AOP),
-//                        new EmployeeSkills(Skills.HIBERNATE),
-//                        new EmployeeSkills(Skills.LOMBOK),
-//                        new EmployeeSkills(Skills.SWAGGER),
-//                        new EmployeeSkills(Skills.POSTGRESQL)))
                 .englishLevel(EnglishLevels.C1)
                 .build();
         EMPLOYEES.add(employee1);

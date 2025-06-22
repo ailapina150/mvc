@@ -14,11 +14,14 @@
     <li th:each="employee : ${employees}">
         <div class="item">
             <div class = "name">
-                <a th:href="@{/resumes/{id}(id=${employee.id})}"> <span th:text="${employee.name}"></span> </a>
+                <a th:href="@{/resumes/{id}(id=${employee.id})}">
+                    <span th:text="${employee.name}"></span> </a>
             </div>
             <div class = "button-class">
-                <a th:href="@{/resumes/edit/{id}(id=${employee.id})}"> <span class = "action">Update</span></a>
-                <a th:href="@{/resumes/delete/{id}(id=${employee.id})}" onclick="return confirmDelete()"><span class = "action" >Delete</span></a>
+                <a th:href="@{/resumes/edit/{id}(id=${employee.id})}">
+                    <span class = "action">Update</span></a>
+                <a th:href="@{/resumes/delete/{id}(id=${employee.id})}"
+                   onclick="return confirmDelete()"><span class = "action" >Delete</span></a>
             </div>
         </div>
     </li>

@@ -3,7 +3,6 @@ package com.resume;
 import com.resume.model.*;
 import lombok.AllArgsConstructor;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -16,9 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
-
-import static com.resume.model.Skills.JAVA;
-import static java.util.List.of;
 
 @Controller
 @AllArgsConstructor
@@ -47,7 +43,6 @@ public class ResumeController {
 
     @GetMapping("/delete/{id}")
     public String deleteResume(@PathVariable Long id){
-        System.out.println("Удаление");
         employeeRepository.deleteById(id);
         return "redirect:/resumes";
     }
@@ -71,7 +66,7 @@ public class ResumeController {
     public String createResume(Model model){
 
         Employee employee = Employee.builder()
-                .projects(List.of( Project.builder().tasks(List.of(Task.builder().build())).build()))
+                .projects(List.of(new Project()))
                 .educations(List.of(new Education()))
                 .skill(new ArrayList<>())
                 .build();
@@ -87,6 +82,7 @@ public class ResumeController {
     public String updateContact(@ModelAttribute("employee") Employee employee,
                                 @RequestParam("photoFileName") MultipartFile photoFile) {
         System.out.println("*****"+employee);
+
         if(employee.getEducations()!= null){
             employee.setEducations(employee.getEducations().stream().filter(Objects::nonNull).toList());
             for (Education education : employee.getEducations()) {
@@ -95,18 +91,22 @@ public class ResumeController {
         }else{
             employee.setEducations(null);
         }
-        employee.setProjects(employee.getProjects().stream().filter(Objects::nonNull).toList());
-        for(Project project: employee.getProjects()){
-            project.setEmployee(employee);
+
+        if(employee.getProjects()!= null) {
+            employee.setProjects(employee.getProjects().stream().filter(Objects::nonNull).toList());
+            for (Project project : employee.getProjects()) {
+                project.setEmployee(employee);
+            }
+        }else{
+            employee.setProjects(null);
         }
 
         for(Project project: employee.getProjects()){
             if(project.getTasks()!=null) {
                 project.setTasks(project.getTasks()
                         .stream()
-                        .filter(e -> e != null && e.getDescription() != null && !e.getDescription().isEmpty())
+                        .filter(e -> e != null && !e.isEmpty())
                         .toList());
-                project.getTasks().forEach(e->e.setProject(project));
             }
         }
 
@@ -122,6 +122,7 @@ public class ResumeController {
                 e.printStackTrace();
             }
         }
+
         employeeRepository.save(employee);
         return "redirect:/resumes";
     }

@@ -55,8 +55,7 @@
         newTask.setAttribute('id', 'taskRow_' + index + '_'+ nextIndex);
         newTask.innerHTML = `
         <div id="taskRow_${index}_${nextIndex}">
-            <input id = "taskId_${index}_${nextIndex}" name="projects[${index}].tasks[${nextIndex}].id"  type="hidden"> 
-            <textarea id = "task_${index}_${nextIndex}"  name="projects[${index}].tasks[${nextIndex}].description"  required> </textarea>
+            <textarea id = "task_${index}_${nextIndex}"  name="projects[${index}].tasks[${nextIndex}]"  required> </textarea>
             <button type="button" class="action" onclick="delTask( ${index} , ${nextIndex})">Delete Task</button>
         </div>
         `;
@@ -82,8 +81,7 @@
             <label> Tasks:</label>           
             <div id = "tasks_${nextIndex}">                
                 <div id="taskRow_${nextIndex}_0" class="task-row" >                  
-                    <input id = "taskId_${nextIndex}_0" name="projects[${nextIndex}].tasks[0].id"  type="hidden" />                 
-                    <textarea id = "task_${nextIndex}_0" type = "text" name="projects[${nextIndex}].tasks[0].description" required></textarea>                  
+                    <textarea id = "task_${nextIndex}_0" type = "text" name="projects[${nextIndex}].tasks[0]" required></textarea>  
                     <button type="button" class="action" onclick="delTask( ${nextIndex},0)">Delete Task</button>                
                 </div>        
             </div>           
