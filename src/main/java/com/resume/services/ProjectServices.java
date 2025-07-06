@@ -19,14 +19,12 @@ public class ProjectServices {
     public ProjectDto getProjectById(Integer id) {
         Project project = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found: " + id));
-        System.out.println(project);
-        System.out.println(mapper.toDto(project));
+
         return mapper.toDto(project);
     }
 
     public List<ProjectDto> getAllProjects() {
         List<Project> projects = repository.findAll();
-        projects.forEach(System.out::println);
         return mapper.toDto(projects);
     }
 }
