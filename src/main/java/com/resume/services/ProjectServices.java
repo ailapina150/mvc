@@ -1,6 +1,5 @@
 package com.resume.services;
 
-import com.resume.HibernateEmployeeRepositoryImpl;
 import com.resume.dto.ProjectDto;
 import com.resume.mappers.ProjectMapper;
 import com.resume.model.Employee;
