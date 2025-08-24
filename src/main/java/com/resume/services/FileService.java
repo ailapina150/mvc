@@ -1,9 +1,9 @@
 package com.resume.services;
 
 import com.resume.model.Employee;
-import com.resume.fabrica.FileFormat;
-import com.resume.fabrica.FileGenerateFactory;
-import com.resume.fabrica.FileGenerator;
+import com.resume.model.FileFormat;
+import com.resume.services.fileFabrica.FileGenerateFactory;
+import com.resume.services.fileFabrica.FileGenerator;
 import org.springframework.stereotype.Service;
 
 @Service

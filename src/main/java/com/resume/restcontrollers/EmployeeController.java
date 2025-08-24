@@ -1,7 +1,7 @@
 package com.resume.restcontrollers;
 
 import com.resume.model.Employee;
-import com.resume.fabrica.FileFormat;
+import com.resume.model.FileFormat;
 import com.resume.request.SendFileRequest;
 import com.resume.services.FileService;
 import com.resume.services.MailSenderService;

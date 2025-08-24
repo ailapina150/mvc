@@ -1,4 +1,4 @@
-package com.resume.fabrica;
+package com.resume.model;
 
 public enum FileFormat {
     DOCX,
