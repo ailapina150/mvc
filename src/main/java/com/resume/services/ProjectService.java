@@ -4,7 +4,6 @@ import com.resume.dto.ProjectDto;
 import com.resume.mappers.ProjectMapper;
 import com.resume.model.Employee;
 import com.resume.model.Project;
-import com.resume.request.CreateProjectRequest;
 import com.resume.springdatarepositories.EmployeeRepository;
 import com.resume.springdatarepositories.ProjectRepository;
 import jakarta.persistence.EntityNotFoundException;
