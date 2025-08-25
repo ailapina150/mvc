@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class SendFileRequest {
+public class SentFileRequest {
     @NotBlank
     @Email
     @Schema(description = "Email адрес для отправки файла",

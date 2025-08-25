@@ -35,7 +35,7 @@ public class ProjectController {
             @Parameter(description = "идентификатор", required = true)
             @PathVariable Integer id) {
         try {
-            ProjectDto project = service.getProjectById(id);
+            ProjectDto project = service.getById(id);
             return ResponseEntity.ok(project);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -46,7 +46,7 @@ public class ProjectController {
             description = "Достоет из базы и преобразует в ДТO данные о всех проектах")
     @GetMapping
     public ResponseEntity<List<ProjectDto>> getAllProjects() {
-        List<ProjectDto> projects = service.getAllProjects();
+        List<ProjectDto> projects = service.getAll();
         if (projects.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -78,7 +78,7 @@ public class ProjectController {
             @RequestBody @Valid CreateProjectRequest request
     ) {
         try {
-            ProjectDto createdProject = service.createProject(request);
+            ProjectDto createdProject = service.save(request.toDto(),request.getDeveloperName());
             // Возвращаем 201 Created и Location на созданный объект
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -90,6 +90,7 @@ public class ProjectController {
             return ResponseEntity.badRequest().build();
         }
     }
+
     @Operation(
             summary = "Удалить проект по идентификатору",
             description = "Удаляет проект по заданному идентификатору, если он существует"
@@ -113,17 +114,18 @@ public class ProjectController {
     })
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(
+    public ResponseEntity<Void> delete(
             @Parameter(description = "Идентификатор проекта", required = true)
             @PathVariable Integer id
     ) {
         try {
-            service.deleteProject(id);
+            service.delete(id);
             // Согласно REST best practices, если успешно - 204 No Content без тела
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             // Если не найден – 404 Not Found
             return ResponseEntity.notFound().build();
+
         }
     }
 }

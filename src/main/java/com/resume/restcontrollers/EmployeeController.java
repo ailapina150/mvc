@@ -1,16 +1,15 @@
 package com.resume.restcontrollers;
 
 import com.resume.dto.EmployeeDto;
-import com.resume.model.FileFormat;
-import com.resume.request.SendFileRequest;
-import com.resume.services.rabbitMQ.AmqpProducerService;
+import com.resume.request.CreateEmployeeRequest;
 import com.resume.services.EmployeeService;
-import com.resume.services.FileService;
-import com.resume.services.MailSenderService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -19,19 +18,16 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService service;
-    private final MailSenderService mailSender;
-    private final FileService fileService;
-    private final AmqpProducerService amqpProducerService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> getResume(@PathVariable Long id) {
-        EmployeeDto employeeDto = service.getEmployeeById(id);
+    public ResponseEntity<EmployeeDto> get(@PathVariable Long id) {
+        EmployeeDto employeeDto = service.getById(id);
         return ResponseEntity.ok(employeeDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeDto>> getAllResumes() {
-        List<EmployeeDto> employees = service.getAllEmployees();
+    public ResponseEntity<List<EmployeeDto>> getAll() {
+        List<EmployeeDto> employees = service.getAll();
         if (employees.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -39,53 +35,27 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping("/{id}/sentEmail")
-    public ResponseEntity<String> sendEmail(@PathVariable Long id) {
-        EmployeeDto employee = service.getEmployeeById(id);
-        mailSender.sendMail(
-                "ailapina150@gmail.com",
-                "resume of " + employee.getName(),
-                employee.getSummary()
-        );
-        return ResponseEntity.ok("Email about" + employee.getName() + " sent to " + employee.getEmail());
+   @PostMapping
+   public ResponseEntity<EmployeeDto> create(@RequestBody CreateEmployeeRequest request) {
+        EmployeeDto employeeDto = service.save(request.toDto());
+        URI location = ServletUriComponentsBuilder
+               .fromCurrentRequest()
+               .path("/{id}")
+               .buildAndExpand(employeeDto.getId())
+               .toUri();
+       return ResponseEntity.created(location).body(employeeDto);
+   }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            service.delete(id);
+            // Согласно REST best practices, если успешно - 204 No Content без тела
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            // Если не найден – 404 Not Found
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping("/{id}/createFile")
-    public ResponseEntity<String> createDocFile(
-            @PathVariable Long id,
-            @RequestParam FileFormat fileFormat
-    ) {
-        EmployeeDto employee = service.getEmployeeById(id);
-        String fileName = fileService.createFile(employee, fileFormat);
-        return ResponseEntity.ok("File " + fileName + " has created");
-    }
-
-    @PostMapping("/{id}/sentAttachmentMail")
-    public ResponseEntity<String> sendEmailWithAttachment(
-            @PathVariable Long id,
-            @RequestBody SendFileRequest request
-    ) {
-        EmployeeDto employee = service.getEmployeeById(id);
-//            String  fileName = switch (request.getFileFormat()) {
-//                case DOCX -> mailSender.createDOCFile(employee);
-//                case EXCEL -> mailSender.createXLSFile(employee);
-//            };
-        mailSender.sendMailWithAttachment(
-                request.getEmailAddress(),
-                "resume of " + employee.getName(),
-                "Вы можите ознакомится с содержимым письма",
-                fileService.createFile(employee, request.getFileFormat())
-        );
-        return ResponseEntity.ok("Email about" + employee.getName() + " sent to " + request.getEmailAddress());
-    }
-
-    @PostMapping("/{id}/sentToRabbit")
-    public ResponseEntity<String> sendEmailToRabbit(
-            @PathVariable Long id
-    ) {
-        EmployeeDto employee = service.getEmployeeById(id);
-            amqpProducerService.sendMessage(employee);
-            return ResponseEntity.ok("Email about " + employee.getName() + " sent to Rabbit");
-
-    }
 }

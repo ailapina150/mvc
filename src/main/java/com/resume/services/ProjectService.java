@@ -21,32 +21,29 @@ public class ProjectService {
     private final EmployeeRepository employeeRepository;
     private final ProjectMapper mapper;
 
-    public ProjectDto getProjectById(Integer id) {
+    public ProjectDto getById(Integer id) {
         Project project = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found: " + id));
 
         return mapper.toDto(project);
     }
 
-    public List<ProjectDto> getAllProjects() {
+    public List<ProjectDto> getAll() {
         List<Project> projects = repository.findAll();
         return mapper.toDto(projects);
     }
 
     @Transactional
-    public ProjectDto createProject(CreateProjectRequest request) {
-        Employee employee = employeeRepository.findByName(request.getDeveloperName())
+    public ProjectDto save(ProjectDto dto, String developerName) {
+        Employee employee = employeeRepository.findByName(developerName)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
-        Project project = Project.builder()
-                .name(request.getName())
-                .description(request.getDescription())
-                .employee(employee)
-                .build();
-        var  saved = repository.save(project);
+        Project project = dto.toEntity();
+        project.setEmployee(employee);
+        var saved = repository.save(project);
         return mapper.toDto(saved);
     }
 
-    public void deleteProject(Integer id) {
+    public void delete(Integer id) {
         Project project = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));
         repository.delete(project);

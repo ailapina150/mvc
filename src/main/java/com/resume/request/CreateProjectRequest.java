@@ -1,5 +1,6 @@
 package com.resume.request;
 
+import com.resume.dto.ProjectDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,4 +18,12 @@ public class CreateProjectRequest {
     @NotBlank
     @Size(min = 1, max = 255)
     private String developerName;
+
+    public ProjectDto toDto() {
+        return ProjectDto
+                .builder()
+                .name(name)
+                .description(description)
+                .build();
+    }
 }

@@ -1,25 +1,30 @@
 package com.resume.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.resume.model.Project;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
+@Builder
 public class ProjectDto {
     private Integer id;
     private String name;
     private String description;
 
-    public Integer getId() {
-        return id;
+    public Project toEntity() {
+        Project project = new Project();
+        project.setName(name);
+        project.setDescription(description);
+        return project;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -30,11 +35,11 @@ public class ProjectDto {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getId() {
+        return id;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

@@ -37,30 +37,30 @@ class ProjectControllerTest {
 
     @Test
     void getProjectByIdTest() throws Exception {
-        when(projectServices.getProjectById(PROJECT_ID)).thenReturn(PROJECT);
+        when(projectServices.getById(PROJECT_ID)).thenReturn(PROJECT);
         mockMvc.perform(get("/projects/" + PROJECT_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(PROJECT_ID))
                 .andExpect(jsonPath("$.name").value(PROJECT.getName()))
                 .andExpect(jsonPath("$.description").value(PROJECT.getDescription()));
-        verify(projectServices, times(1)).getProjectById(PROJECT_ID);
+        verify(projectServices, times(1)).getById(PROJECT_ID);
 
     }
 
     @Test
     void getAllProjectsTest() throws Exception {
-        when(projectServices.getAllProjects()).thenReturn(PROJECTS);
+        when(projectServices.getAll()).thenReturn(PROJECTS);
         mockMvc.perform(get("/projects"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(PROJECT_ID))
                 .andExpect(jsonPath("$[0].name").value(PROJECT.getName()))
                 .andExpect(jsonPath("$[0].description").value(PROJECT.getDescription()));
-        verify(projectServices, times(1)).getAllProjects();
+        verify(projectServices, times(1)).getAll();
     }
 
     @Test
     void createProjectTest() throws Exception {
-        when(projectServices.createProject(REQUEST)).thenReturn(PROJECT);
+        when(projectServices.save(REQUEST.toDto(), REQUEST.getDeveloperName())).thenReturn(PROJECT);
         mockMvc.perform(post("/projects")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(REQUEST))
@@ -68,16 +68,16 @@ class ProjectControllerTest {
                 .andExpect(jsonPath("$.id").value(PROJECT_ID))
                 .andExpect(jsonPath("$.name").value(PROJECT.getName()))
                 .andExpect(jsonPath("$.description").value(PROJECT.getDescription()));
-        verify(projectServices, times(1)).createProject(REQUEST);
+        verify(projectServices, times(1)).save(REQUEST.toDto(), DEVELOPER_NAME);
 
     }
 
     @Test
     void deleteProjectTest() throws Exception {
 
-        doNothing().when(projectServices).deleteProject(PROJECT_ID);
+        doNothing().when(projectServices).delete(PROJECT_ID);
         mockMvc.perform(delete("/projects/" + PROJECT_ID))
                 .andExpect(status().isNoContent());
-        verify(projectServices).deleteProject(PROJECT_ID);
+        verify(projectServices).delete(PROJECT_ID);
     }
 }
