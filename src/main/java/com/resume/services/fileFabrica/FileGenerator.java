@@ -1,9 +1,9 @@
 package com.resume.services.fileFabrica;
 
-import com.resume.model.Employee;
+import com.resume.dto.EmployeeDto;
 
 public interface FileGenerator {
     String FOLDER_PATH = "c:\\Users\\PC\\Downloads\\";
 
-    String generateFile(Employee employee);
+    String generateFile(EmployeeDto employee);
 }

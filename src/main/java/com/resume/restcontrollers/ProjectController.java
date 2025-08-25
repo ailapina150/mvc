@@ -2,7 +2,7 @@ package com.resume.restcontrollers;
 
 import com.resume.dto.ProjectDto;
 import com.resume.request.CreateProjectRequest;
-import com.resume.services.ProjectServices;
+import com.resume.services.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping("/projects")
 public class ProjectController {
 
-    private final ProjectServices service;
+    private final ProjectService service;
 
     @Operation(summary = "Получить проект по идентификатору",
             description = "Достоет из базы и преобразует в ДТO данные о проекте по заданному идентификатору")

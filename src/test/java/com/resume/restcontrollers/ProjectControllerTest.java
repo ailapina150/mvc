@@ -3,7 +3,7 @@ package com.resume.restcontrollers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.resume.dto.ProjectDto;
 import com.resume.request.CreateProjectRequest;
-import com.resume.services.ProjectServices;
+import com.resume.services.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,7 +33,7 @@ class ProjectControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private ProjectServices projectServices;
+    private ProjectService projectServices;
 
     @Test
     void getProjectByIdTest() throws Exception {

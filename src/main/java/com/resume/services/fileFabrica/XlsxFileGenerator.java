@@ -1,5 +1,6 @@
 package com.resume.services.fileFabrica;
 
+import com.resume.dto.EmployeeDto;
 import com.resume.model.Employee;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -11,7 +12,7 @@ import java.io.IOException;
 
 public class XlsxFileGenerator implements FileGenerator {
     @Override
-    public String generateFile(Employee employee) {
+    public String generateFile(EmployeeDto employee) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("sheet1");
         Row row0 = sheet.createRow(0);

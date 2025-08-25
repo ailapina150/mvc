@@ -1,6 +1,6 @@
 package com.resume.services.fileFabrica;
 
-import com.resume.model.Employee;
+import com.resume.dto.EmployeeDto;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -9,9 +9,9 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class DocxFileGenerator implements FileGenerator{
+public class DocxFileGenerator implements FileGenerator {
     @Override
-    public String generateFile(Employee employee) {
+    public String generateFile(EmployeeDto employee) {
         XWPFDocument doc = new XWPFDocument();
         XWPFParagraph titleParagraph = doc.createParagraph();
         titleParagraph.setAlignment(ParagraphAlignment.CENTER); // Выравнивание по центру
