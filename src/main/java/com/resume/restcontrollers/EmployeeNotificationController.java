@@ -51,10 +51,6 @@ public class EmployeeNotificationController {
             @RequestBody @Valid SentFileRequest request
     ) {
         EmployeeDto employee = service.getById(id);
-//            String  fileName = switch (request.getFileFormat()) {
-//                case DOCX -> mailSender.createDOCFile(employee);
-//                case EXCEL -> mailSender.createXLSFile(employee);
-//            };
         mailSender.sendMailWithAttachment(
                 request.getEmailAddress(),
                 "resume of " + employee.getName(),

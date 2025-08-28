@@ -17,6 +17,7 @@ public class AmqpConsumerService {
 
     @RabbitListener(queues = RabbitConfig.MAIL_QUEUE)
     public void receiveMessage(EmployeeDto employee) {
+        System.out.println("Received employee " + employee);
         mailSender.sendMailWithAttachment(
                 "ailapina150@gmail.com",
                 "resume of " + employee.getName(),

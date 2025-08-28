@@ -1,5 +1,6 @@
 package com.resume.services;
 
+import com.resume.annotations.SimpleLog;
 import com.resume.dto.ProjectDto;
 import com.resume.mappers.ProjectMapper;
 import com.resume.model.Employee;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@SimpleLog
 public class ProjectService {
     private final ProjectRepository repository;
     private final EmployeeRepository employeeRepository;
@@ -35,6 +37,16 @@ public class ProjectService {
     @Transactional
     public ProjectDto save(ProjectDto dto, String developerName) {
         Employee employee = employeeRepository.findByName(developerName)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+        Project project = dto.toEntity();
+        project.setEmployee(employee);
+        var saved = repository.save(project);
+        return mapper.toDto(saved);
+    }
+
+    @Transactional
+    public ProjectDto save(ProjectDto dto, Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
         Project project = dto.toEntity();
         project.setEmployee(employee);

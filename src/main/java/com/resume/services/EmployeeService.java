@@ -1,5 +1,6 @@
 package com.resume.services;
 
+import com.resume.annotations.SimpleLog;
 import com.resume.dto.EmployeeDto;
 import com.resume.mappers.EmployeeMapper;
 import com.resume.model.Employee;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@SimpleLog
 public class EmployeeService {
     private final EmployeeRepository repository;
     private final EmployeeMapper mapper;
@@ -40,6 +42,10 @@ public class EmployeeService {
         Employee employee = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));
         repository.delete(employee);
+    }
+
+    public void deleteAll(){
+        repository.deleteAll();
     }
 
 }

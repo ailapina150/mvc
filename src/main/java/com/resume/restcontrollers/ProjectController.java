@@ -1,5 +1,7 @@
 package com.resume.restcontrollers;
 
+import com.resume.annotations.RandomProjectDto;
+import com.resume.annotations.SimpleLog;
 import com.resume.dto.ProjectDto;
 import com.resume.request.CreateProjectRequest;
 import com.resume.services.ProjectService;
@@ -27,6 +29,8 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService service;
+    @RandomProjectDto
+    private ProjectDto randomProjectDto;
 
     @Operation(summary = "Получить проект по идентификатору",
             description = "Достоет из базы и преобразует в ДТO данные о проекте по заданному идентификатору")
@@ -91,6 +95,22 @@ public class ProjectController {
         }
     }
 
+    @PostMapping("random-for-employee/{employeeId}")
+    public ResponseEntity<ProjectDto> createProject(@PathVariable Long employeeId){
+        try {
+            ProjectDto createdProject = service.save(randomProjectDto,employeeId);
+            // Возвращаем 201 Created и Location на созданный объект
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(createdProject.getId())
+                    .toUri();
+            return ResponseEntity.created(location).body(createdProject);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @Operation(
             summary = "Удалить проект по идентификатору",
             description = "Удаляет проект по заданному идентификатору, если он существует"
@@ -128,4 +148,5 @@ public class ProjectController {
 
         }
     }
+
 }

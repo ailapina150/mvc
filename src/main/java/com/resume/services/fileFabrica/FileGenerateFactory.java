@@ -1,13 +1,22 @@
 package com.resume.services.fileFabrica;
 
 
+import com.resume.annotations.FileMaker;
 import com.resume.model.FileFormat;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@AllArgsConstructor
 public class FileGenerateFactory {
-    public static FileGenerator getFileGenerator(FileFormat fileFormat) {
+
+    private XlsxFileGenerator xlsxFileGenerator;
+    private DocxFileGenerator docxFileGenerator;
+
+    public FileGenerator getFileGenerator(FileFormat fileFormat) {
         return switch (fileFormat) {
-            case EXCEL -> new XlsxFileGenerator();
-            case DOCX -> new DocxFileGenerator();
+            case EXCEL -> xlsxFileGenerator;
+            case DOCX -> docxFileGenerator;
         };
     }
 }

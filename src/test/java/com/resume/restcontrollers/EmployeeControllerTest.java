@@ -1,9 +1,8 @@
 package com.resume.restcontrollers;
 
+import com.resume.annotations.RandomEmployeeDto;
 import com.resume.dto.EmployeeDto;
-import com.resume.model.EnglishLevels;
 import com.resume.services.EmployeeService;
-import com.resume.springdatarepositories.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +41,8 @@ class EmployeeControllerTest {
     @Autowired
     private EmployeeService service;
 
-    @Autowired
-    private EmployeeRepository repository;
-
-    private Long employeeId;
-
+    @RandomEmployeeDto
+    private EmployeeDto employee;
 
     @BeforeEach
     void checkConnection() {
@@ -58,37 +54,21 @@ class EmployeeControllerTest {
     }
 
     @BeforeEach
-    void setUp() {
-        // Очищаем всю базу перед каждым тестом
-        repository.deleteAll();
-        // Создание тестовых данных
-        EmployeeDto employee = new EmployeeDto();
-        employee.setName("John Doe");
-        employee.setPosition("java developer");
-        employee.setFormat("remotely or hybrid from Brest, Belarus");
-        employee.setPhoto("/images/img_1.png");
-        employee.setTg("@HanaLapina");
-        employee.setPhone(375_298_211_966L);
-        employee.setSummary("""
-                I have been developing applications in Java and Sprig since 2021.
-                I have experience in optimizing high-load microservice applications,
-                as well as creating applications from scratch
-                """);
-        employee.setEmail("john@example.com");
-        employee.setEnglishLevel(EnglishLevels.B1);
-        EmployeeDto savedEmployee = service.save(employee);
-        employeeId = savedEmployee.getId();
+    void setUp() throws IllegalAccessException {
+        service.deleteAll();
+        employee = service.save(employee);
     }
 
     @Test
     void getEmployee() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employeeId))
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId()))
                 .andExpectAll(
                         status().isOk(),
-                        jsonPath("$.id").value(employeeId),
-                        jsonPath("$.name").value("John Doe"),
-                        jsonPath("$.email").value("john@example.com")
+                        jsonPath("$.id").value(employee.getId()),
+                        jsonPath("$.name").value(employee.getName()),
+                        jsonPath("$.email").value(employee.getEmail())
                 );
+        System.out.println("Employee: " + employee);
     }
 
     @Test
@@ -99,7 +79,6 @@ class EmployeeControllerTest {
                         jsonPath("$.size()").value(1)
                 );
     }
-
 
     @Test
     void getEmployeeNotFound() throws Exception {

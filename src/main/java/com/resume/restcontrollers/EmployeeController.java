@@ -1,10 +1,14 @@
 package com.resume.restcontrollers;
 
+import com.resume.annotations.RandomEmployeeDto;
+import com.resume.annotations.SimpleLog;
 import com.resume.dto.EmployeeDto;
 import com.resume.request.CreateEmployeeRequest;
 import com.resume.services.EmployeeService;
+import com.resume.utils.Random;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,9 +19,18 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/employees")
+@SimpleLog
 public class EmployeeController {
 
     private final EmployeeService service;
+
+//    @RandomEmployeeDto
+//    private EmployeeDto randomEmployee;
+
+//    @Lookup
+//    public EmployeeDto getRandomEmployee() {
+//        return null;
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> get(@PathVariable Long id) {
@@ -45,6 +58,19 @@ public class EmployeeController {
                .toUri();
        return ResponseEntity.created(location).body(employeeDto);
    }
+
+    @PostMapping ("/random")
+    public ResponseEntity<EmployeeDto> create() {
+       // EmployeeDto employeeDto = service.save(randomEmployee);
+       // EmployeeDto employeeDto = service.save(getRandomEmployee());
+        EmployeeDto employeeDto = service.save(Random.getRandomEmployeeDto());
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(employeeDto.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(employeeDto);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
