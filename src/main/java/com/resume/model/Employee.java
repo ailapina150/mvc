@@ -1,4 +1,5 @@
 package com.resume.model;
+import com.resume.dto.EmployeeDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,4 +40,19 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
     private List<Education> educations;
+
+    public EmployeeDto toDto() {
+        return EmployeeDto.builder()
+                .id(id)
+                .name(name)
+                .position(position)
+                .format(format)
+                .photo(photo)
+                .email(email)
+                .tg(tg)
+                .phone(phone)
+                .summary(summary)
+                .englishLevel(englishLevel)
+                .build();
+    }
 }

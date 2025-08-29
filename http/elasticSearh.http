@@ -1,0 +1,57 @@
+### Получить информацию о кластере
+GET http://localhost:9200/
+Accept: application/json
+
+### Получить список всех индексов
+GET http://localhost:9200/_cat/indices?v
+Accept: application/json
+
+### Поиск по всем логам
+GET http://localhost:9200/app-logs-*/_search?pretty
+Accept: application/json
+
+### Поиск ERROR логов
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "match": {
+      "level": "ERROR"
+    }
+  }
+}
+
+### Поиск по тексту в сообщении
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "match_phrase": {
+      "message": "---------APPLICATION STARTED------------"
+    }
+  }
+}
+
+### Поиск за последний час
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "range": {
+      "@timestamp": {
+        "gte": "now-1h"
+      }
+    }
+  }
+}
+
+### Получить количество документов в индексе
+GET http://localhost:9200/_cat/count/app-logs-*?v
+Accept: application/json
+
+### Получить здоровье кластера
+GET http://localhost:9200/_cluster/health?pretty
+Accept: application/json

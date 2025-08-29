@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,18 +21,18 @@ import java.util.List;
 public class ProjectService {
     private final ProjectRepository repository;
     private final EmployeeRepository employeeRepository;
-    private final ProjectMapper mapper;
+    //private final ProjectMapper mapper;
 
     public ProjectDto getById(Integer id) {
         Project project = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found: " + id));
 
-        return mapper.toDto(project);
+        return project.toDto();
     }
 
     public List<ProjectDto> getAll() {
         List<Project> projects = repository.findAll();
-        return mapper.toDto(projects);
+        return projects.stream().map(Project::toDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -41,7 +42,7 @@ public class ProjectService {
         Project project = dto.toEntity();
         project.setEmployee(employee);
         var saved = repository.save(project);
-        return mapper.toDto(saved);
+        return saved.toDto();
     }
 
     @Transactional
@@ -51,7 +52,7 @@ public class ProjectService {
         Project project = dto.toEntity();
         project.setEmployee(employee);
         var saved = repository.save(project);
-        return mapper.toDto(saved);
+        return saved.toDto();
     }
 
     public void delete(Integer id) {

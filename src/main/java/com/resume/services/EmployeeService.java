@@ -18,24 +18,24 @@ import java.util.List;
 @SimpleLog
 public class EmployeeService {
     private final EmployeeRepository repository;
-    private final EmployeeMapper mapper;
+   // private final EmployeeMapper mapper;
 
     public EmployeeDto getById(Long id) {
-        Employee Employee = repository.findById(id)
+        Employee employee = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found: " + id));
 
-        return mapper.toDto(Employee);
+        return employee.toDto(); //mapper.toDto(Employee);
     }
 
     public List<EmployeeDto> getAll() {
-        List<Employee> Employees = repository.findAll();
-        return mapper.toDto(Employees);
+        List<Employee>employees = repository.findAll();
+        return employees.stream().map(Employee::toDto).toList();//mapper.toDto(Employees);
     }
 
     @Transactional
     public EmployeeDto save(EmployeeDto dto) {
         var saved = repository.save(dto.toEntity());
-        return mapper.toDto(saved);
+        return saved.toDto();//mapper.toDto(saved);
     }
 
     public void delete(Long id) {

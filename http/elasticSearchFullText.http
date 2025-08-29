@@ -1,0 +1,116 @@
+### Простой полнотекстовый поиск по всем полям
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "query_string": {
+      "query": "started",
+      "default_field": "*"
+    }
+  }
+}
+
+### Поиск с указанием конкретных полей
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "multi_match": {
+      "query": "error database",
+      "fields": ["message", "level", "exception"]
+    }
+  }
+}
+
+### Поиск с учетом опечаток
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "match": {
+      "message": {
+        "query": "connnection timeout",
+        "fuzziness": "AUTO"
+      }
+    }
+  }
+}
+
+### Комплексный поиск с несколькими условиями
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "timeout OR error",
+            "fields": ["message", "level"]
+          }
+        }
+      ],
+      "filter": [
+        {
+          "range": {
+            "@timestamp": {
+              "gte": "now-1h"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "@timestamp": {
+        "order": "desc"
+      }
+    }
+  ],
+  "size": 50
+}
+
+### Поиск по шаблону
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "wildcard": {
+      "message.keyword": {
+        "value": "*app*"
+      }
+    }
+  }
+}
+
+### Поиск со статистикой
+POST http://localhost:9200/app-logs-*/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "match": {
+      "message": "error"
+    }
+  },
+  "aggs": {
+    "error_types": {
+      "terms": {
+        "field": "level.keyword"
+      }
+    },
+    "timeline": {
+      "date_histogram": {
+        "field": "@timestamp",
+        "calendar_interval": "hour"
+      }
+    }
+  },
+  "size": 0
+}

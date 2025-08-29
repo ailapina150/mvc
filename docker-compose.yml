@@ -10,6 +10,9 @@ services:
       - POSTGRES_PASSWORD=12345
       - POSTGRES_DB=db
     restart: always
+    networks:
+      - app-network
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
@@ -23,5 +26,52 @@ services:
       - RABBITMQ_DEFAULT_PASS=password
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-volumes:
+    networks:
+      - app-network
+
+  elasticsearch:
+    image: elasticsearch:8.11.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data
+    networks:
+      - app-network
+
+  logstash:
+      image: logstash:8.11.0
+      container_name: logstash
+      volumes:
+        - ./logstash/pipeline:/usr/share/logstash/pipeline
+        - ./logs:/var/log/application:ro
+      environment:
+        - LS_JAVA_OPTS=-Xms256m -Xmx256m
+      depends_on:
+        - elasticsearch
+      networks:
+        - app-network
+
+  kibana:
+      image: kibana:8.11.0
+      container_name: kibana
+      ports:
+        - "5601:5601"
+      environment:
+        - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      depends_on:
+        - elasticsearch
+      networks:
+        - app-network
+
+volumes:  #сохраняем данные между перезапусками
   rabbitmq_data:
+  elastic_data:
+
+networks: #позволяем контейнерам общаться между собой по именам
+  app-network:
+    driver: bridge

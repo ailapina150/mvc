@@ -1,5 +1,7 @@
 package com.resume.model;
 
+import com.resume.dto.EmployeeDto;
+import com.resume.dto.ProjectDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,5 +40,13 @@ public class Project {
                 ", description='" + description + '\'' +
                 ", tasks=" + tasks +
                 '}';
+    }
+
+    public ProjectDto toDto() {
+        return ProjectDto.builder()
+                .id(id)
+                .name(name)
+                .description(description)
+                .build();
     }
 }

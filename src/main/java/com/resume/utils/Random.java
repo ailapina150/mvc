@@ -1,5 +1,6 @@
 package com.resume.utils;
 
+import com.resume.annotations.SimpleLog;
 import com.resume.dto.EmployeeDto;
 import com.resume.dto.ProjectDto;
 import com.resume.model.EnglishLevels;
@@ -12,6 +13,7 @@ public class Random {
             "/images/img_1.png", "/images/img_2.png"
     };
 
+    @SimpleLog
     static public String getRandomString(int length) {
 
         StringBuilder sb = new StringBuilder(length);
@@ -23,6 +25,7 @@ public class Random {
 
         return sb.toString();
     }
+
     static public EnglishLevels getRandomEnglishLevel() {
         EnglishLevels[] levels = EnglishLevels.values();
         return levels[RANDOM.nextInt(levels.length)];
