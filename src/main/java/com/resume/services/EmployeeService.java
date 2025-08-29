@@ -2,7 +2,6 @@ package com.resume.services;
 
 import com.resume.annotations.SimpleLog;
 import com.resume.dto.EmployeeDto;
-import com.resume.mappers.EmployeeMapper;
 import com.resume.model.Employee;
 import com.resume.springdatarepositories.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;

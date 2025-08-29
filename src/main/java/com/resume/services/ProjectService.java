@@ -2,7 +2,6 @@ package com.resume.services;
 
 import com.resume.annotations.SimpleLog;
 import com.resume.dto.ProjectDto;
-import com.resume.mappers.ProjectMapper;
 import com.resume.model.Employee;
 import com.resume.model.Project;
 import com.resume.springdatarepositories.EmployeeRepository;

@@ -1,6 +1,5 @@
 package com.resume.model;
 
-import com.resume.dto.EmployeeDto;
 import com.resume.dto.ProjectDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "projects", schema ="public" )
+@Table(name = "projects", schema = "public")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
