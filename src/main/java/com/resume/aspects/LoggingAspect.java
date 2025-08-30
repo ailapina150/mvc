@@ -1,7 +1,5 @@
 package com.resume.aspects;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,30 +10,29 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @Slf4j
-@AllArgsConstructor
 public class LoggingAspect {
 
     // Точеки среза для всех методов в пакете services
     @Pointcut("execution(* com.resume.services.*.*(..))")
-    public void serviceMethods() {}
-
-    // Точеки среза для всех методов в пакете services
-    @Pointcut("execution(* com.resume.restcontrollers.*.*(..))")
-    public void controllerMethods() {}
+    public void serviceMethods() {
+    }
 
     // Точеки среза для методов с аннотацией SimpleLog
     @Pointcut("@annotation(com.resume.annotations.SimpleLog)")
-    public void simpleLogMethods() {}
+    public void simpleLogMethods() {
+    }
 
     // Точеки среза для  всех методов
     @Pointcut("execution(* *(..))")
-    public void allMethods() {}
+    public void allMethods() {
+    }
 
     // Точеки среза для  всех статических методов
     @Pointcut("execution(static * *(..))")
-    public void staticMethods() {}
+    public void staticMethods() {
+    }
 
-    @Around("serviceMethods()||controllerMethods()")
+    @Around("serviceMethods()")
     public Object logMethodExecution(ProceedingJoinPoint joinPoint) throws Throwable {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().getSimpleName();
