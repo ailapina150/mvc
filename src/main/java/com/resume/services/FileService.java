@@ -2,8 +2,6 @@ package com.resume.services;
 
 import com.resume.dto.EmployeeDto;
 import com.resume.model.FileFormat;
-import com.resume.services.fileFabrica.FileGenerateFactory;
-import com.resume.services.fileFabrica.FileGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;

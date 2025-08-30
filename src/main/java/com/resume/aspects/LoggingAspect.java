@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @AllArgsConstructor
 public class LoggingAspect {
-    private final ObjectMapper objectMapper;
 
     // Точеки среза для всех методов в пакете services
     @Pointcut("execution(* com.resume.services.*.*(..))")

@@ -44,7 +44,7 @@ public class EmployeeService {
     }
 
     @Caching(evict = {
-            @CacheEvict(value = "employees", key = "#employee.id"),
+            @CacheEvict(value = "employees", key = "#id"),
             @CacheEvict(value = "allEmployees", allEntries = true)
     })
     public void delete(Long id) {
