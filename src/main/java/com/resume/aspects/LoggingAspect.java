@@ -20,7 +20,7 @@ public class LoggingAspect {
     @Pointcut("execution(* com.resume.services.*.*(..))")
     public void serviceMethods() {}
 
-    // Точеки среза для всех методов в пакете restcontrollers
+    // Точеки среза для всех методов в пакете services
     @Pointcut("execution(* com.resume.restcontrollers.*.*(..))")
     public void controllerMethods() {}
 
@@ -28,7 +28,15 @@ public class LoggingAspect {
     @Pointcut("@annotation(com.resume.annotations.SimpleLog)")
     public void simpleLogMethods() {}
 
-    @Around("serviceMethods() || controllerMethods() || simpleLogMethods()")
+    // Точеки среза для  всех методов
+    @Pointcut("execution(* *(..))")
+    public void allMethods() {}
+
+    // Точеки среза для  всех статических методов
+    @Pointcut("execution(static * *(..))")
+    public void staticMethods() {}
+
+    @Around("serviceMethods()||controllerMethods()")
     public Object logMethodExecution(ProceedingJoinPoint joinPoint) throws Throwable {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().getSimpleName();

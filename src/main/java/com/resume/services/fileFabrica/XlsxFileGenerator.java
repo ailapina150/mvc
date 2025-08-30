@@ -7,15 +7,18 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+
 @Component
 public class XlsxFileGenerator implements FileGenerator {
     @Override
     @FileMaker(fileFormat = FileFormat.EXCEL)
+  //  @Cacheable(value = CACHE_EXCEL_NAME, key = "#employee.id + '-EXCEL")
     public String generateFile(EmployeeDto employee) {
         return null;
     }

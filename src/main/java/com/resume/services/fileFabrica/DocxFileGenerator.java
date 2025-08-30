@@ -3,10 +3,12 @@ package com.resume.services.fileFabrica;
 import com.resume.annotations.FileMaker;
 import com.resume.dto.EmployeeDto;
 import com.resume.model.FileFormat;
+import com.resume.services.FileService;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
@@ -18,6 +20,7 @@ public class DocxFileGenerator implements FileGenerator {
 
     @Override
     @FileMaker( fileFormat = FileFormat.DOCX)
+   // @Cacheable(value = CACHE_DOCX_NAME, key = "#employee.id")
     public String generateFile(EmployeeDto employee) {
         return null;
     }

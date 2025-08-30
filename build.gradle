@@ -56,6 +56,14 @@ dependencies {
     //AOP
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
+    // Redis with Jedis (exclude Lettuce completely)
+    implementation ('org.springframework.boot:spring-boot-starter-data-redis') {
+        exclude group: 'io.lettuce', module: 'lettuce-core'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'redis.clients:jedis:5.1.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

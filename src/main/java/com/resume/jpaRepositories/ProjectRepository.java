@@ -1,4 +1,4 @@
-package com.resume.springdatarepositories;
+package com.resume.jpaRepositories;
 
 import com.resume.model.Project;
 import org.springframework.data.jpa.repository.JpaRepository;

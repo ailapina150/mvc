@@ -29,6 +29,18 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass 12345 --appendonly yes
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - app-network
+
   elasticsearch:
     image: elasticsearch:8.11.0
     container_name: elasticsearch
@@ -40,6 +52,7 @@ services:
       - "9200:9200"
     volumes:
       - elastic_data:/usr/share/elasticsearch/data
+    restart: unless-stopped
     networks:
       - app-network
 
@@ -53,6 +66,7 @@ services:
         - LS_JAVA_OPTS=-Xms256m -Xmx256m
       depends_on:
         - elasticsearch
+      restart: unless-stopped
       networks:
         - app-network
 
@@ -65,11 +79,13 @@ services:
         - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
       depends_on:
         - elasticsearch
+      restart: unless-stopped
       networks:
         - app-network
 
 volumes:  #сохраняем данные между перезапусками
   rabbitmq_data:
+  redis_data:
   elastic_data:
 
 networks: #позволяем контейнерам общаться между собой по именам
