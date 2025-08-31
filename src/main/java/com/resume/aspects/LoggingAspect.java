@@ -17,6 +17,10 @@ public class LoggingAspect {
     public void serviceMethods() {
     }
 
+    // Точеки среза для всех методов в пакете restcontrollers
+    @Pointcut("execution(* com.resume.restcontrollers.*.*(..))")
+    public void controllerMethods() {}
+
     // Точеки среза для методов с аннотацией SimpleLog
     @Pointcut("@annotation(com.resume.annotations.SimpleLog)")
     public void simpleLogMethods() {
@@ -32,7 +36,7 @@ public class LoggingAspect {
     public void staticMethods() {
     }
 
-    @Around("serviceMethods()")
+    @Around("serviceMethods() || controllerMethods()")
     public Object logMethodExecution(ProceedingJoinPoint joinPoint) throws Throwable {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().getSimpleName();

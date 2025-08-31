@@ -1,0 +1,42 @@
+# curl -X POST
+#  http://localhost:8081/realms/your-realm/protocol/openid-connect/token
+#  -H "Content-Type: application/x-www-form-urlencoded"
+#  -d "client_id=your-client-id"
+#  -d "client_secret=your-client-secret"
+#  -d "grant_type=client_credentials"
+POST http://localhost:8081/realms/resume/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id = resumeClient &
+username = admin &
+password = 12345  &
+grant_type = password
+
+###
+POST http://localhost:8000/auth
+Content-Type: application/json
+
+{
+  "login": "admin",
+  "password": "12345"
+}
+
+### Получить все промо-коды
+GET http://localhost:8000/promo-cod
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5b0xVazdrY1NITHNHTVFQMDgtZTNnTXM4ZnlTRElDM1JoZHVqVld6THBRIn0.eyJleHAiOjE3NTY2MzUxOTcsImlhdCI6MTc1NjYzNDg5NywianRpIjoiZGE3NGMyNTQtZTVkYS00YmVmLTkxMTMtMTAyZDJhZWFjZWU1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9yZXN1bWUiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNTNhZGQzYzQtMTkyYS00ZDIwLTllODItMjIxZTkzMDIyYmJhIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoicmVzdW1lQ2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImIyN2RjNmIzLTc4N2EtNGQyZi05YmI0LTVmMWIyYmE0OTRiOSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXJlc3VtZSIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6ImIyN2RjNmIzLTc4N2EtNGQyZi05YmI0LTVmMWIyYmE0OTRiOSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiIiwiZmFtaWx5X25hbWUiOiIifQ.rFYCpNhBEj6Y1qiVzJddlKmk_4GRi8sqEyEfC2T4sD0F2jVoTe0Kw4MftG7XpwWQJ-MRje_pyr6uSlGBiNl66gVTGKQ-yD2t68E_yzev3Q2oUvapW16xDGANq7SnOPpP4HUvC3CM6oHBiLIeSD6C1myr7DmTLMRvwKh5dqo-35O7QTKM2LHeQEMz85KOsB8_OSLVS5qwnUUsk0a6Why0nY6pbJvciS0scETFqJyCZ71AbpqaMJ84gsi0RthTdhFlGeln--XA2mKTBfKWuUAoMeXEIXHKVOcx6QL0sVDY7CbwhZmwJ7kutD0wDFfB5dGQKtKmoXIKaB2Jj3tEJhCcrg
+
+### Auth and get token
+POST http://localhost:8000/auth
+Content-Type: application/json
+
+{
+  "login": "admin",
+  "password": "12345"
+}
+
+> {% client.global.set("auth_token", response.body.access_token); %}
+
+### Get all promo codes with token
+GET http://localhost:8000/promo-cod
+Authorization: Bearer {{auth_token}}
+Accept: application/json

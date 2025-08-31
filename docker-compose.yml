@@ -3,12 +3,15 @@ version: "3.9"
 services:
   postgres:
     image: postgres:15
+    container_name: postgres
     ports:
       - "5444:5432"
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=12345
       - POSTGRES_DB=db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     restart: always
     networks:
       - app-network
@@ -40,6 +43,43 @@ services:
     restart: unless-stopped
     networks:
       - app-network
+
+  postgres-2:
+    image: postgres:15
+    container_name: keycloak-db
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres2_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - app-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.2
+    container_name: keycloak
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: 12345
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: 12345
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+    depends_on:
+      - postgres-2
+    networks:
+      - app-network
+    command: [ "start-dev" ] # запуск в режиме разработки
 
   elasticsearch:
     image: elasticsearch:8.11.0
@@ -84,9 +124,11 @@ services:
         - app-network
 
 volumes:  #сохраняем данные между перезапусками
+  postgres_data:
   rabbitmq_data:
   redis_data:
   elastic_data:
+  postgres2_data:
 
 networks: #позволяем контейнерам общаться между собой по именам
   app-network:

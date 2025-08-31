@@ -2,9 +2,13 @@ package com.resume.restcontrollers;
 
 import com.resume.model.PromoCod;
 import com.resume.redisRepository.PromoCodRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -15,7 +19,12 @@ public class PromoCodController {
 
     private final PromoCodRepository repository;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
+    @Operation(
+            summary = "Get all promo codes",
+            security = @SecurityRequirement(name = "bearerAuth")  // ← ЭТО ОБЯЗАТЕЛЬНО
+    )
     public ResponseEntity<PromoCod> save (@RequestBody PromoCod promoCod) {
         PromoCod saved = repository.save(promoCod);
         return ResponseEntity.ok(saved);
@@ -29,6 +38,11 @@ public class PromoCodController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(
+            summary = "Get all promo codes",
+            security = @SecurityRequirement(name = "bearerAuth")  // ← ЭТО ОБЯЗАТЕЛЬНО
+    )
     public ResponseEntity<List<PromoCod>> getAll () {
         var promoCod = repository.findAll();
         return ResponseEntity.ok(promoCod);
