@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>RestApi Service</h1>
+    <ul>
+        <li>Data Base:
+            <ul><li>User (1)
+                <ul>
+                    <li>+id: Long</li>
+                    <li>+login: String</li>
+                    <li>+password: String</li>
+                    <li>+role: Enum</li>
+                </ul>
+            </li>
+            <li>UserProfile (2)
+                <ul>
+                    <li>+id</li>
+                    <li>first name: String</li>
+                    <li>middle name: String</li>
+                    <li>last name: String</li>
+                    <li>berthDay: LocalDate</li>
+                    <li>Passport number: String</li>
+                    <li>email: String</li>
+                    <li>varify email: Boolean</li>
+                    <li>tg: String</li>
+                    <li>tgId: Long</li>
+                </ul>
+            </li>
+            <li>Topic (2)
+                <ul>
+                    <li>+id: Long</li>
+                    <li>+name: String</li>
+                    <li>+min_estimate: Integer</li>
+                    <li>certificate: String</li>
+                    <li>image: String</li>
+                    <li>+free: Boolean = true</li>
+                    <li>+public: Boolean = true</li>
+                    <li>+userId: Long</li>
+                </ul>
+            </li>
+            <li>UserTopic (3)
+                <ul>
+                    <li>+id: Long</li>
+                    <li>+userId: Long</li>
+                    <li>+topicId: Long</li>
+                    <li>+TestingDateTime: LocalDateTime</li>
+                    <li>CertificateDate: LocalDate</li>
+                </ul>
+            </li>
+            <li>Question (3)
+                    <ul>
+                        <li>+id: Long</li>
+                        <li>+topicId: Long</li>
+                        <li>+test: String</li>
+                        <li>image: String</li>
+                        <li>+estimate: Integer</li>
+                    </ul>
+            </li>
+            <li>UserQuestion (4)
+                <ul>
+                    <li>+id: Long</li>
+                    <li>+userId: Long</li>
+                    <li>+questionId: Long</li>
+                    <li>+estimate: Integer</li>
+                    <li></li>
+                </ul>
+            </li>
+            <li>Answer (4)
+                <ul>
+                    <li>+id:Long</li>
+                    <li>+questionId:Long</li>
+                    <li>+text:String</li>
+                    <li>+correct: Boolean = false </li>
+                    <li>image: String</li>
+                </ul>
+            </li>
+        </ul>
+        <li>CRUD</li>
+        <li>Filer</li>
+        <li>Sorting</li>
+        <li>Composite Request</li>
+    </ul>
+</body>
+</html>

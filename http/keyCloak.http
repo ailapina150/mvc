@@ -40,3 +40,96 @@ Content-Type: application/json
 GET http://localhost:8000/promo-cod
 Authorization: Bearer {{auth_token}}
 Accept: application/json
+
+### Получить токен администратора Keycloak
+POST http://localhost:8081/realms/master/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=admin-cli&username=admin&password=12345&grant_type=password
+
+> {%
+    client.global.set("keycloak_admin_token", response.body.access_token);
+    client.log("Keycloak admin token получен");
+%}
+
+### Получение реалмов
+GET http://localhost:8081/admin/realms
+Authorization: Bearer {{keycloak_admin_token}}
+
+### Получить токен администратора Keycloak с scope=openid
+POST http://localhost:8081/realms/master/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=admin-cli
+&grant_type=password
+&username=admin
+&password=12345
+&scope=openid
+
+> {%
+client.global.set("keycloak_admin_token_with_openid", response.body.access_token);
+client.log("Keycloak admin token получен");
+%}
+
+### Получение информации о user
+GET http://localhost:8081/realms/master/protocol/openid-connect/userinfo
+Authorization: Bearer {{keycloak_admin_token_with_openid}}
+
+### Получить токен с scope=openid
+POST http://localhost:8081/realms/resume/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=admin-cli
+    &grant_type=password
+    &username=admin
+    &password=12345
+    &scope=openid
+
+> {%
+    client.global.set("keycloak_admin_token_with_openid", response.body.access_token);
+    client.log("Keycloak admin token получен");
+%}
+
+### Получение информации о user
+GET http://localhost:8081/realms/resume/protocol/openid-connect/userinfo
+Authorization: Bearer {{keycloak_admin_token_with_openid}}
+
+### Создать пользователя в Keycloak (требует админские права)
+POST http://localhost:8081/admin/realms/resume/users
+Content-Type: application/json
+Authorization: Bearer {{keycloak_admin_token_with_openid}}
+
+{
+  "username": "новый-пользователь1",
+  "email": "user1@example.com",
+  "firstName": "Имя",
+  "lastName": "Фамилия",
+  "enabled": true,
+  "credentials": [
+    {
+      "type": "password",
+      "value": "пароль123",
+      "temporary": false
+    }
+  ]
+}
+
+### Получить токен с scope=openid
+POST http://localhost:8081/realms/master/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=resumeClient
+    &grant_type=client_credentials
+    &client_secret=12345
+    &scope=openid
+
+> {%
+    client.global.set("keycloak_admin_token_with_openid", response.body.access_token);
+    client.log("Keycloak admin token получен");
+%}
+
+
+### Получение списка всех пользователей
+GET http://localhost:8081/admin/realms/resume/users
+Authorization: Bearer{{keycloak_admin_token_with_openid}}
+Content-Type: application/json

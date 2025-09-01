@@ -19,8 +19,12 @@ public class RabbitConfig {
     public static final String MAIL_EXCHANGE = "mailExchange";
     public static final String MAIL_ROUTING_KEY = "mail.routing.key";
 
+    public static final String PROJECT_QUEUE = "projectQueue";
+    public static final String PROJECT_EXCHANGE = "projectExchange";
+    public static final String PROJECT_ROUTING_KEY = "project.routing.key";
+
     @Bean
-    public Queue queue() {
+    public Queue mailQueue() {
         return new Queue(MAIL_QUEUE, false);
     }
 
@@ -34,6 +38,23 @@ public class RabbitConfig {
         return BindingBuilder.bind(mailQueue)
                 .to(mailExchange)
                 .with(MAIL_ROUTING_KEY);
+    }
+
+    @Bean
+    public Queue projectQueue() {
+        return new Queue(PROJECT_QUEUE, false);
+    }
+
+    @Bean
+    public DirectExchange projectExchange() {
+        return new DirectExchange(PROJECT_EXCHANGE, true, false);
+    }
+
+    @Bean
+    public Binding projectBinding(Queue projectQueue, DirectExchange mailExchange) {
+        return BindingBuilder.bind(projectQueue)
+                .to(mailExchange)
+                .with(PROJECT_ROUTING_KEY);
     }
 
     @Bean

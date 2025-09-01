@@ -56,6 +56,13 @@ grant_type = password
 
 Полученый jwt-token можно декодировать на сайте https://www.jwt.io/
 
+7.Назначьте необходимые права роли
+
+  Service Accounts Enabled = ON
+
+  Authorization Enabled = ON
+
+  Права в Service Account Roles → realm-management (нужные роли: manage-users, view-users)
 -------------------------------------------------------SWAGGER----------------------------------------------------------
 Откройте: http://localhost:8000/swagger-ui.html
 
@@ -66,6 +73,8 @@ grant_type = password
 Убедитесь, что токен появился в верхней панели
 
 Выполните запрос - теперь токен должен автоматически подставляться
+
+HE PAБOTAEТ !
 
 _____________________________________________________ELASTICSEARCH______________________________________________________
 

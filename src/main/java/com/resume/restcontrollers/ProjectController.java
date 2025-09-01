@@ -5,6 +5,7 @@ import com.resume.annotations.SimpleLog;
 import com.resume.dto.ProjectDto;
 import com.resume.request.CreateProjectRequest;
 import com.resume.services.ProjectService;
+import com.resume.services.rabbitMQ.AmqpProjectProducerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,6 +32,8 @@ public class ProjectController {
     private final ProjectService service;
     @RandomProjectDto
     private ProjectDto randomProjectDto;
+
+    private final AmqpProjectProducerService amqpProjectProducerService;
 
     @Operation(summary = "Получить проект по идентификатору",
             description = "Достоет из базы и преобразует в ДТO данные о проекте по заданному идентификатору")
@@ -149,4 +152,15 @@ public class ProjectController {
         }
     }
 
+    @GetMapping("{id}/rabbit")
+    public ResponseEntity<?> getById (@PathVariable Integer id) {
+        try {
+            ProjectDto project = service.getById(id);
+            amqpProjectProducerService.sendMessage(project);
+
+            return ResponseEntity.ok(project);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
