@@ -40,12 +40,4 @@ public class Project {
                 ", tasks=" + tasks +
                 '}';
     }
-
-    public ProjectDto toDto() {
-        return ProjectDto.builder()
-                .id(id)
-                .name(name)
-                .description(description)
-                .build();
-    }
 }

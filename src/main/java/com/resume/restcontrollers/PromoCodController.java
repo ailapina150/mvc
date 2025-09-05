@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class PromoCodController {
 
     private final PromoCodRepository repository;
 
-    @PreAuthorize("hasRole('ADMIN')")
+  //  @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(
             summary = "Get all promo codes",
@@ -37,7 +37,7 @@ public class PromoCodController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+   // @PreAuthorize("hasRole('ADMIN')")
     @Operation(
             summary = "Get all promo codes",
             security = @SecurityRequirement(name = "bearerAuth")  // ← ЭТО ОБЯЗАТЕЛЬНО

@@ -26,18 +26,4 @@ public class EmployeeDto {
     private String summary;
 
     private EnglishLevels englishLevel;
-
-    public Employee toEntity() {
-        Employee employee = new Employee();
-        employee.setName(this.name);
-        employee.setPosition(this.position);
-        employee.setFormat(this.format);
-        employee.setPhoto(this.photo);
-        employee.setEmail(this.email);
-        employee.setTg(this.tg);
-        employee.setPhone(this.phone);
-        employee.setSummary(this.summary);
-        employee.setEnglishLevel(this.englishLevel);
-        return employee;
-    }
 }

@@ -28,7 +28,8 @@ public class Random {
 
     static public EnglishLevels getRandomEnglishLevel() {
         EnglishLevels[] levels = EnglishLevels.values();
-        return levels[RANDOM.nextInt(levels.length)];
+        int index = RANDOM.nextInt(levels.length);
+        return levels[index];
     }
 
     static public String getRandomPhoto() {
@@ -37,17 +38,17 @@ public class Random {
 
     static public ProjectDto getRandomProjectDto(){
         return ProjectDto.builder()
-                .name(getRandomString(30))
-                .description(getRandomString(100))
+                .name(getRandomString(RANDOM.nextInt(30)))
+                .description(getRandomString(RANDOM.nextInt(100)))
                 .build();
     }
 
     static public EmployeeDto getRandomEmployeeDto() {
         return EmployeeDto.builder()
-                .name(getRandomString(30))
-                .position(getRandomString(30))
-                .format(getRandomString(30))
-                .summary(getRandomString(100))
+                .name(getRandomString(RANDOM.nextInt(30)))
+                .position(getRandomString(RANDOM.nextInt(30)))
+                .format(getRandomString(RANDOM.nextInt(30)))
+                .summary(getRandomString(RANDOM.nextInt(100)))
                 .phone(375_290_000_000L + RANDOM.nextInt(999_999))
                 .email(getRandomString(20) + "@gmail.com")
                 .tg("@" + getRandomString(20))

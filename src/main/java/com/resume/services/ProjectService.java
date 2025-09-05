@@ -2,6 +2,7 @@ package com.resume.services;
 
 import com.resume.annotations.SimpleLog;
 import com.resume.dto.ProjectDto;
+import com.resume.mappers.ProjectMapper;
 import com.resume.model.Employee;
 import com.resume.model.Project;
 import com.resume.jpaRepositories.EmployeeRepository;
@@ -12,7 +13,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,38 +20,38 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectRepository repository;
     private final EmployeeRepository employeeRepository;
-    //private final ProjectMapper mapper;
+    private final ProjectMapper mapper;
 
     public ProjectDto getById(Integer id) {
         Project project = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found: " + id));
 
-        return project.toDto();
+        return mapper.toDto(project);
     }
 
     public List<ProjectDto> getAll() {
         List<Project> projects = repository.findAll();
-        return projects.stream().map(Project::toDto).collect(Collectors.toList());
+        return mapper.toDto(projects);
     }
 
     @Transactional
     public ProjectDto save(ProjectDto dto, String developerName) {
         Employee employee = employeeRepository.findByName(developerName)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
-        Project project = dto.toEntity();
+        Project project = mapper.toProject(dto);
         project.setEmployee(employee);
         var saved = repository.save(project);
-        return saved.toDto();
+        return mapper.toDto(saved);
     }
 
     @Transactional
     public ProjectDto save(ProjectDto dto, Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
-        Project project = dto.toEntity();
+        Project project = mapper.toProject(dto);
         project.setEmployee(employee);
         var saved = repository.save(project);
-        return saved.toDto();
+        return mapper.toDto(saved);
     }
 
     public void delete(Integer id) {

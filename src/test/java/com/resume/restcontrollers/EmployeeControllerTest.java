@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -61,6 +60,7 @@ class EmployeeControllerTest {
 
     @Test
     void getEmployee() throws Exception {
+        System.out.println("Employee: " + employee);
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId()))
                 .andExpectAll(
                         status().isOk(),
@@ -68,7 +68,6 @@ class EmployeeControllerTest {
                         jsonPath("$.name").value(employee.getName()),
                         jsonPath("$.email").value(employee.getEmail())
                 );
-        System.out.println("Employee: " + employee);
     }
 
     @Test

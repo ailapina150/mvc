@@ -13,4 +13,7 @@ public interface ProjectMapper {
     ProjectDto toDto(Project project);
 
     List<ProjectDto> toDto(List<Project> projects);
+
+    Project toProject(ProjectDto projectDto);
+
 }

@@ -1,6 +1,5 @@
 package com.resume.restcontrollers;
 
-import com.resume.annotations.RandomEmployeeDto;
 import com.resume.annotations.SimpleLog;
 import com.resume.dto.EmployeeDto;
 import com.resume.request.CreateEmployeeRequest;
@@ -8,7 +7,6 @@ import com.resume.services.EmployeeService;
 import com.resume.utils.Random;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/employees")
-@SimpleLog
+@SimpleLog(value="dgdf")
 public class EmployeeController {
 
     private final EmployeeService service;
@@ -33,13 +31,15 @@ public class EmployeeController {
 //    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> get(@PathVariable Long id) {
+    public ResponseEntity<EmployeeDto> getById(@PathVariable Long id) {
+        System.out.println("*****EmployeeController.getById****");
         EmployeeDto employeeDto = service.getById(id);
         return ResponseEntity.ok(employeeDto);
     }
 
     @GetMapping
     public ResponseEntity<List<EmployeeDto>> getAll() {
+        System.out.println("*****EmployeeController.getAll****");
         List<EmployeeDto> employees = service.getAll();
         if (employees.isEmpty()) {
             return ResponseEntity.noContent().build();

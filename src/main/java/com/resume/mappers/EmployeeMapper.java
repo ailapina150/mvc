@@ -11,4 +11,6 @@ public interface EmployeeMapper {
     EmployeeDto toDto(Employee employee);
 
     List<EmployeeDto> toDto(List<Employee> employees);
+
+    Employee toEntity(EmployeeDto employeeDto);
 }

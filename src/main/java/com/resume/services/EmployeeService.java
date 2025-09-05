@@ -2,6 +2,7 @@ package com.resume.services;
 
 import com.resume.annotations.SimpleLog;
 import com.resume.dto.EmployeeDto;
+import com.resume.mappers.EmployeeMapper;
 import com.resume.model.Employee;
 import com.resume.jpaRepositories.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,27 +21,29 @@ import java.util.List;
 @SimpleLog
 public class EmployeeService {
     private final EmployeeRepository repository;
-   // private final EmployeeMapper mapper;
+    private final EmployeeMapper mapper;
 
     @Cacheable(value = "employees", key = "#id")
     public EmployeeDto getById(Long id) {
+        System.out.println("*****EmployeeService.getById****");
         Employee employee = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found: " + id));
 
-        return employee.toDto(); //mapper.toDto(Employee);
+        System.out.println("EmployeeService.getById " + employee);
+        return mapper.toDto(employee);
     }
 
     @Cacheable(value = "allEmployees")
     public List<EmployeeDto> getAll() {
         List<Employee>employees = repository.findAll();
-        return employees.stream().map(Employee::toDto).toList();//mapper.toDto(Employees);
+        return mapper.toDto(employees);
     }
 
     @CacheEvict(value = "allEmployees", allEntries = true)
     @Transactional
     public EmployeeDto save(EmployeeDto dto) {
-        var saved = repository.save(dto.toEntity());
-        return saved.toDto();//mapper.toDto(saved);
+        var saved = repository.save(mapper.toEntity(dto));
+        return mapper.toDto(saved);
     }
 
     @Caching(evict = {

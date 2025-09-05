@@ -1,7 +1,6 @@
 package com.resume.restcontrollers;
 
 import com.resume.annotations.RandomProjectDto;
-import com.resume.annotations.SimpleLog;
 import com.resume.dto.ProjectDto;
 import com.resume.request.CreateProjectRequest;
 import com.resume.services.ProjectService;
@@ -85,7 +84,7 @@ public class ProjectController {
             @RequestBody @Valid CreateProjectRequest request
     ) {
         try {
-            ProjectDto createdProject = service.save(request.toDto(),request.getDeveloperName());
+            ProjectDto createdProject = service.save(request.toDto(), request.getDeveloperName());
             // Возвращаем 201 Created и Location на созданный объект
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -99,9 +98,9 @@ public class ProjectController {
     }
 
     @PostMapping("random-for-employee/{employeeId}")
-    public ResponseEntity<ProjectDto> createProject(@PathVariable Long employeeId){
+    public ResponseEntity<ProjectDto> createProject(@PathVariable Long employeeId) {
         try {
-            ProjectDto createdProject = service.save(randomProjectDto,employeeId);
+            ProjectDto createdProject = service.save(randomProjectDto, employeeId);
             // Возвращаем 201 Created и Location на созданный объект
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -153,7 +152,7 @@ public class ProjectController {
     }
 
     @GetMapping("{id}/rabbit")
-    public ResponseEntity<?> getById (@PathVariable Integer id) {
+    public ResponseEntity<?> getById(@PathVariable Integer id) {
         try {
             ProjectDto project = service.getById(id);
             amqpProjectProducerService.sendMessage(project);
