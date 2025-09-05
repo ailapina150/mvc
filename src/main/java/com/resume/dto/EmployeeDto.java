@@ -1,6 +1,5 @@
 package com.resume.dto;
 
-import com.resume.model.Employee;
 import com.resume.model.EnglishLevels;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

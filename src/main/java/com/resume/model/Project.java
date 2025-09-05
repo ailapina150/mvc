@@ -1,6 +1,5 @@
 package com.resume.model;
 
-import com.resume.dto.ProjectDto;
 import jakarta.persistence.*;
 import lombok.*;
 

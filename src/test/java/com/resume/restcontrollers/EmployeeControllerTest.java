@@ -53,7 +53,7 @@ class EmployeeControllerTest {
     }
 
     @BeforeEach
-    void setUp() throws IllegalAccessException {
+    void setUp(){
         service.deleteAll();
         employee = service.save(employee);
     }
