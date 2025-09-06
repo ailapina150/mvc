@@ -1,0 +1,56 @@
+
+### Перевод с английского на русский
+GET https://api.mymemory.translated.net/get?q=hello world&langpair=en|ru
+Accept: application/json
+
+### Получить текущую погоду для Москвы
+GET https://api.open-meteo.com/v1/forecast?latitude=55.7558&longitude=37.6173&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m
+Accept: application/json
+
+### Поиск с фильтром по стране
+GET https://geocoding-api.open-meteo.com/v1/search?name=Berlin
+
+### Поиск с фильтром по стране
+GET https://nominatim.openstreetmap.org/search?
+    city=Berlin&
+    country=Germany&
+    format=json&
+    limit=5
+Accept: application/json
+
+### Получить страны с фильтрацией полей
+GET https://restcountries.com/v3.1/all?fields=name,cca2,cca3,flags,capital,population
+Accept: application/json
+
+###
+GET https://nominatim.openstreetmap.org/reverse?
+    lat=55.7558&
+    lon=37.6173&
+    format=json&
+    addressdetails=1
+Accept: application/json
+
+### Породы собак
+GET https://dog.ceo/api/breeds/list/all
+Accept: application/json
+
+### Курсы криптовалют
+GET https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd
+Accept: application/json
+
+### Курсы валют (фиктивные)
+GET https://api.exchangerate-api.com/v4/latest/USD
+Accept: application/json
+
+### HTTP заголовки
+GET https://httpbin.org/headers
+Accept: application/json
+
+### UUID генератор
+GET https://httpbin.org/uuid
+Accept: application/json
+
+### Футбольные лиги
+GET https://api.football-data.org/v4/competitions
+Accept: application/json
+X-Auth-Token:

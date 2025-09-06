@@ -98,5 +98,9 @@ powershell: Invoke-WebRequest -Uri "http://localhost:9200/_cat/indices?v" -Metho
     Проверьте Kibana:
 браузер: http://localhost:5601
 
+--------------------------------------------------SPRING BOOT STARTER---------------------------------------------------
+Публикация стартера в локальном репозитории
+./gradlew clean build publishToMavenLocal
+
 
 

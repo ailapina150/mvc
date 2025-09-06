@@ -1,8 +1,10 @@
 package com.resume.services;
 
+import com.example.errorhandlerstarter.exception.ResourceNotFoundException;
 import com.resume.dto.EmployeeDto;
 import com.resume.model.FileFormat;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class FileService {
@@ -33,9 +36,9 @@ public class FileService {
             filePath = service.createFile(employee, fileFormat);
             if (!Files.exists(Path.of(filePath))){
                 try {
-                    throw new Exception("File " + filePath + " was not created ");
+                    throw new ResourceNotFoundException("File not found");
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                   log.error(e.getMessage());
                 }
             }
 

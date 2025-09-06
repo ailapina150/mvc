@@ -14,6 +14,7 @@ java {
 }
 
 repositories {
+    mavenLocal() // ДОЛЖЕН БЫТЬ ПЕРВЫМ!
     mavenCentral()
 }
 
@@ -77,6 +78,10 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
+
+    // Ваш кастомный стартер
+    implementation 'com.example:errorhandler-spring-boot-starter:0.0.1-SNAPSHOT'
+    implementation 'com.example:translator-spring-boot-starter:0.0.1-SNAPSHOT'
 }
 
 tasks.named('test') {
