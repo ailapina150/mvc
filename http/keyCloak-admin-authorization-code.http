@@ -1,0 +1,101 @@
+### Step 1: Get authorization code (redirect to login form)
+# @name auth_request
+GET http://localhost:8081/realms/resume/protocol/openid-connect/auth?
+    client_id=resume&
+    response_type=code&
+    scope=openid profile email&
+    redirect_uri=http://localhost:8000/login/oauth2/code/keycloak&
+    state=abc123&
+    prompt=login
+
+> {%
+    // Extract cookies from response headers
+    const setCookieHeader = response.headers.valueOf("Set-Cookie");
+
+    // Extract individual cookies
+    const authSessionIdMatch = setCookieHeader.match(/AUTH_SESSION_ID=([^;]+)/);
+    const authSessionIdLegacyMatch = setCookieHeader.match(/AUTH_SESSION_ID_LEGACY=([^;]+)/);
+    const kcRestartMatch = setCookieHeader.match(/KC_RESTART=([^;]+)/);
+
+    // Save cookies to global variables
+    if (authSessionIdMatch) client.global.set("AUTH_SESSION_ID", authSessionIdMatch[1]);
+    if (authSessionIdLegacyMatch) client.global.set("AUTH_SESSION_ID_LEGACY", authSessionIdLegacyMatch[1]);
+    if (kcRestartMatch) client.global.set("KC_RESTART", kcRestartMatch[1]);
+
+    // Extract parameters from HTML response
+    const html = response.body;
+
+    // Try different patterns for form action extraction
+    const formActionMatch = html.match(/action="([^"]*login-actions\/authenticate[^"]*)"/);
+    const sessionCodeMatch = html.match(/session_code=([^&]+)/);
+    const executionMatch = html.match(/execution=([^&]+)/);
+    const tabIdMatch = html.match(/tab_id=([^&]+)/);
+    const clientIdMatch = html.match(/client_id=([^&]+)/);
+
+    if (formActionMatch) {
+        const formAction = formActionMatch[1].replace(/&amp;/g, '&');
+        console.log("Form action:", formAction);
+
+        // Extract parameters from form action URL
+        const urlParams = new URLSearchParams(formAction.split('?')[1]);
+        client.global.set("session_code", urlParams.get('session_code') || '');
+        client.global.set("execution", urlParams.get('execution') || '');
+        client.global.set("tab_id", urlParams.get('tab_id') || '');
+        client.global.set("client_id", urlParams.get('client_id') || 'resume');
+    } else if (sessionCodeMatch && executionMatch && tabIdMatch) {
+        // Fallback to direct regex matching
+        client.global.set("session_code", sessionCodeMatch[1].replace(/&amp;/g, ''));
+        client.global.set("execution", executionMatch[1].replace(/&amp;/g, ''));
+        client.global.set("tab_id", tabIdMatch[1].replace(/&amp;/g, ''));
+        client.global.set("client_id", clientIdMatch ? clientIdMatch[1].replace(/&amp;/g, '') : 'resume');
+    } else {
+        console.error("Failed to extract parameters from HTML");
+        console.log("HTML snippet:", html.substring(0, 500));
+    }
+
+    // Debug output
+    console.log("Session code:", client.global.get("session_code"));
+    console.log("Execution:", client.global.get("execution"));
+    console.log("Tab ID:", client.global.get("tab_id"));
+    console.log("Client ID:", client.global.get("client_id"));
+    console.log("AUTH_SESSION_ID:", client.global.get("AUTH_SESSION_ID"));
+%}
+
+### Step 2: Authenticate and get authorization code
+# @name login_request
+POST http://localhost:8081/realms/resume/login-actions/authenticate?
+    session_code={{session_code}}&
+    execution={{execution}}&
+    client_id={{client_id}}&
+    tab_id={{tab_id}}
+Content-Type: application/x-www-form-urlencoded
+Cookie: AUTH_SESSION_ID={{AUTH_SESSION_ID}}; AUTH_SESSION_ID_LEGACY={{AUTH_SESSION_ID_LEGACY}}; KC_RESTART={{KC_RESTART}}
+
+username=admin&password=admin
+
+### Step 3: Exchange authorization code for tokens
+# @name token_exchange
+POST http://localhost:8081/realms/resume/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&
+client_id=resume&
+client_secret=AvAYzGmNXtqYSiWdHmhk1fvPjIDQxpq2&
+redirect_uri=http://localhost:8000/login/oauth2/code/keycloak&
+code=d5c15ca6-952d-4e5e-936d-5ba5cdf23759.9f6d5acd-45e5-4900-85e1-64040a75290a.2edb0dac-f8a7-411f-809a-270d799db7b0
+
+> {% client.global.set("auth_token", response.body.access_token); %}
+
+### Get all promo codes with token
+GET http://localhost:8000/promo-cod
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+### Получение информации о user
+GET http://localhost:8081/realms/resume/protocol/openid-connect/userinfo
+Authorization: Bearer {{auth_token}}
+
+### Получение списка всех пользователей
+GET http://localhost:8081/admin/realms/resume/users
+Authorization: Bearer{{auth_token}}
+Content-Type: application/json

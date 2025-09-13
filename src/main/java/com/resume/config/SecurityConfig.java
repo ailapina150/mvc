@@ -15,40 +15,40 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
-
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails admin = User.builder()
-                .username("admin").password(passwordEncoder.encode("admin")).roles("ADMIN").build();
-        UserDetails user = User.builder()
-                .username("user").password(passwordEncoder.encode("user")).roles("USER").build();
-        UserDetails employee = User.builder()
-                .username("employee").password(passwordEncoder.encode("employee")).roles("EMPLOYEE").build();
-
-        return new InMemoryUserDetailsManager(user, admin, employee);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-         return http
-                 .csrf(AbstractHttpConfigurer::disable) // Отключение CSRF для API
-                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/resumes/delete/**").hasRole("ADMIN")
-                        .requestMatchers("/resumes/edit/**").hasAnyRole("ADMIN","USER")
-                        .requestMatchers("/resumes/create/**").hasRole("ADMIN")
-                        .requestMatchers("/**").permitAll()
-
-                 )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                .logout(LogoutConfigurer::permitAll)
-                .build();
-    }
-}
+//@Configuration
+//@EnableWebSecurity
+//public class SecurityConfig {
+//
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+//        UserDetails admin = User.builder()
+//                .username("admin").password(passwordEncoder.encode("admin")).roles("ADMIN").build();
+//        UserDetails user = User.builder()
+//                .username("user").password(passwordEncoder.encode("user")).roles("USER").build();
+//        UserDetails employee = User.builder()
+//                .username("employee").password(passwordEncoder.encode("employee")).roles("EMPLOYEE").build();
+//
+//        return new InMemoryUserDetailsManager(user, admin, employee);
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//         return http
+//                 .csrf(AbstractHttpConfigurer::disable) // Отключение CSRF для API
+//                 .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/resumes/delete/**").hasRole("ADMIN")
+//                        .requestMatchers("/resumes/edit/**").hasAnyRole("ADMIN","USER")
+//                        .requestMatchers("/resumes/create/**").hasRole("ADMIN")
+//                        .requestMatchers("/**").permitAll()
+//
+//                 )
+//                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+//                .logout(LogoutConfigurer::permitAll)
+//                .build();
+//    }
+//}

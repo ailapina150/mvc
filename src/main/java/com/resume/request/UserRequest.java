@@ -13,7 +13,7 @@ public class UserRequest{
     String login;
     @NotBlank
     @Schema(description = "Пароль",
-            example = "12345",
-            defaultValue = "12345")
+            example = "admin",
+            defaultValue = "admin")
     String password;
 }
