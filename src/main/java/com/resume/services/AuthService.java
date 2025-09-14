@@ -1,6 +1,6 @@
 package com.resume.services;
 
-import com.resume.request.UserRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
+
+    private final RestTemplate restTemplate;
+
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private String jwtIssuerUrl;
 
@@ -33,21 +37,19 @@ public class AuthService {
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("client_id", clientId);
-        body.add("username",username);
-        body.add("password",password);
+        body.add("username", username);
+        body.add("password", password);
         body.add("client_secret", clientSecret);
         body.add("grant_type", "password");
         body.add("scope", scope);
 
         var requestEntity = new HttpEntity<>(body, headers);
 
-        return new RestTemplate().exchange(
+        return restTemplate.exchange(
                 tokenUrl,
                 HttpMethod.POST,
                 requestEntity,
                 String.class
         );
     }
-
-
 }
