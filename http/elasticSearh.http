@@ -6,6 +6,10 @@ Accept: application/json
 GET http://localhost:9200/_cat/indices?v
 Accept: application/json
 
+### Получить информацию о индексе: его маппинг, алиасы и настройки
+GET http://localhost:9200/application-logs-2025.10.20
+Accept: application/json
+
 ### Поиск по всем логам
 GET http://localhost:9200/app-logs-*/_search?pretty
 Accept: application/json

@@ -21,13 +21,13 @@ public class RedisConfig {
         redisMapper.activateDefaultTyping(
                 objectMapper.getPolymorphicTypeValidator(),
                 ObjectMapper.DefaultTyping.EVERYTHING,
-                JsonTypeInfo.As.PROPERTY // ← ИЗМЕНИТЕ НА PROPERTY
+                JsonTypeInfo.As.PROPERTY
         );
 
         return RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
                         new GenericJackson2JsonRedisSerializer(redisMapper)
                 ))
-                .entryTtl(Duration.ofMinutes(30));
+                .entryTtl(Duration.ofMinutes(2));
     }
 }

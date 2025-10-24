@@ -44,7 +44,7 @@ services:
     networks:
       - app-network
 
-  postgres-2:
+  keycloak-db:
     image: postgres:15
     container_name: keycloak-db
     environment:
@@ -69,17 +69,17 @@ services:
       KC_DB_PASSWORD: 12345
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: 12345
+      # Упрощенная конфигурация для разработки:
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8090
       KC_HTTP_ENABLED: true
-      KC_HOSTNAME_STRICT: false
-      KC_HOSTNAME_STRICT_HTTPS: false
     ports:
-      - "8081:8080"
-    restart: unless-stopped
+      - "8090:8080"
     depends_on:
-      - postgres-2
+      - keycloak-db
     networks:
       - app-network
-    command: [ "start-dev" ] # запуск в режиме разработки
+    command: [ "start-dev", "--http-enabled=true" ]
 
   elasticsearch:
     image: elasticsearch:8.11.0

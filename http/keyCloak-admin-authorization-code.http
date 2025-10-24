@@ -1,6 +1,6 @@
 ### Step 1: Get authorization code (redirect to login form)
 # @name auth_request
-GET http://localhost:8081/realms/resume/protocol/openid-connect/auth?
+GET http://localhost:8090/realms/resume/protocol/openid-connect/auth?
     client_id=resume&
     response_type=code&
     scope=openid profile email&
@@ -63,7 +63,7 @@ GET http://localhost:8081/realms/resume/protocol/openid-connect/auth?
 
 ### Step 2: Authenticate and get authorization code
 # @name login_request
-POST http://localhost:8081/realms/resume/login-actions/authenticate?
+POST http://localhost:8090/realms/resume/login-actions/authenticate?
     session_code={{session_code}}&
     execution={{execution}}&
     client_id={{client_id}}&
@@ -75,14 +75,14 @@ username=admin&password=admin
 
 ### Step 3: Exchange authorization code for tokens
 # @name token_exchange
-POST http://localhost:8081/realms/resume/protocol/openid-connect/token
+POST http://localhost:8090/realms/resume/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=authorization_code&
 client_id=resume&
 client_secret=AvAYzGmNXtqYSiWdHmhk1fvPjIDQxpq2&
 redirect_uri=http://localhost:8000/login/oauth2/code/keycloak&
-code=d5c15ca6-952d-4e5e-936d-5ba5cdf23759.9f6d5acd-45e5-4900-85e1-64040a75290a.2edb0dac-f8a7-411f-809a-270d799db7b0
+code=2d063da4-aee0-4a62-afeb-4b0155fa9339.45db22b3-6af0-44b1-90dd-8e344adfbf12.2edb0dac-f8a7-411f-809a-270d799db7b0
 
 > {% client.global.set("auth_token", response.body.access_token); %}
 
