@@ -82,6 +82,9 @@ dependencies {
     // Ваш кастомный стартер
     implementation 'com.example:errorhandler-spring-boot-starter:0.0.1-SNAPSHOT'
     implementation 'com.example:translator-spring-boot-starter:0.0.1-SNAPSHOT'
+
+    //logstash
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 }
 
 tasks.named('test') {
